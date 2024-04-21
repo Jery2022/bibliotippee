@@ -1,1 +1,1 @@
-web: node scripts/heroku-start.js
+web: heroku-php-apache2 public/
