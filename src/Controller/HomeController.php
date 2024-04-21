@@ -23,7 +23,7 @@ class HomeController extends AbstractController
                 <body style="background-color:powderblue;">
                     <div style="display:flex; flex-direction:column;justify-content:center; align-items:center">
                         <h1>Bienvenue sur <span style="color:red;">BiblioTIPPEE</span></h1>
-                        <h2>Site de gestion des documents de la CNTIPPEE </h2>
+                        <p>Site de gestion des documents de la CNTIPPEE </p>
                         <img src="/images/under-construction.gif" alt="En construction" />
                     </div>
                  </body>
