@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-ejyr_bibliotippee}
       # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-147Admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-147Admin#}
       POSTGRES_USER: ${POSTGRES_USER:-ejyr_cntippee}
     healthcheck:
       test: ['CMD', 'pg_isready']
