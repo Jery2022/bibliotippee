@@ -50,6 +50,9 @@ class User
     #[ORM\OneToMany(targetEntity: Search::class, mappedBy: 'users')]
     private Collection $searchs;
 
+    #[ORM\Column(length: 255)]
+    private ?string $role = null;
+
     public function __construct()
     {
         $this->documents = new ArrayCollection();
@@ -201,6 +204,18 @@ class User
                 $search->setUsers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): static
+    {
+        $this->role = $role;
 
         return $this;
     }
