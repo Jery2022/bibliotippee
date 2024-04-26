@@ -45,7 +45,7 @@ class UserCrudController extends AbstractCrudController
 
         yield  IdField::new('id')->hideOnForm();
         yield  TextField::new('pseudo')
-            ->setLabel('Pseudo: ')
+            ->setLabel('Pseudo : ')
             ->setCustomOption(TextField::OPTION_MAX_LENGTH, 20)
             ->setFormTypeOption('attr.placeholder', 'Saisir le pseudo...')
             ->setFormTypeOption('attr.pattern', '.{2,20}')

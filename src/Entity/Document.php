@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
+#[Vich\Uploadable]
 class Document
 {
     #[ORM\Id]
@@ -22,28 +25,8 @@ class Document
     #[ORM\Column(length: 255)]
     private ?string $author = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $filePath = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $fileFormat = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $taille = null;
-
     #[ORM\Column]
     private ?bool $isPublished = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $publishedAt = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $filePathImageGarde = null;
-
-     
 
     /**
      * @var Collection<int, Download>
@@ -74,6 +57,26 @@ class Document
      */
     #[ORM\OneToMany(targetEntity: Upload::class, mappedBy: 'document')]
     private Collection $uploads;
+
+   
+ // NOTE: This is not a mapped field of entity metadata, just a simple property.
+ #[Vich\UploadableField(mapping: 'document', fileNameProperty: 'fileNameDocument', size: 'fileSizeDocument', mimeType: 'fileMimeTypeDocument')]
+ private ?File $imageNameDocument = null;
+
+ #[ORM\Column(nullable: true)]
+ private ?string $FileNameDocument = null;
+
+ #[ORM\Column(nullable: true)]
+ private ?int $fileSizeDocument = null;
+
+ #[ORM\Column(length:50, nullable: true)]
+ private ?string $fileMimeTypeDocument = null;
+
+ #[ORM\Column(nullable: true)]
+ private ?\DateTimeImmutable $createdAt = null;
+
+ #[ORM\Column(nullable: true)]
+ private ?\DateTimeImmutable $publishAt = null;
 
 
     public function __construct()
@@ -117,48 +120,12 @@ class Document
         return $this;
     }
 
-    public function getFilePath(): ?string
-    {
-        return $this->filePath;
-    }
-
-    public function setFilePath(string $filePath): static
-    {
-        $this->filePath = $filePath;
-
-        return $this;
-    }
-
-    public function getFileFormat(): ?string
-    {
-        return $this->fileFormat;
-    }
-
-    public function setFileFormat(string $fileFormat): static
-    {
-        $this->fileFormat = $fileFormat;
-
-        return $this;
-    }
-
-    public function getTaille(): ?string
-    {
-        return $this->taille;
-    }
-
-    public function setTaille(string $taille): static
-    {
-        $this->taille = $taille;
-
-        return $this;
-    }
-
     public function isPublished(): ?bool
     {
         return $this->isPublished;
     }
 
-    public function setPublished(bool $isPublished): static
+    public function setIsPublished(bool $isPublished): static
     {
         $this->isPublished = $isPublished;
 
@@ -177,30 +144,18 @@ class Document
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeImmutable
+    public function getPublishAt(): ?\DateTimeImmutable
     {
-        return $this->publishedAt;
+        return $this->publishAt;
     }
 
-    public function setPublishedAt(\DateTimeImmutable $publishedAt): static
+    public function setPublishAt(\DateTimeImmutable $publishAt): static
     {
-        $this->publishedAt = $publishedAt;
+        $this->publishAt = $publishAt;
 
         return $this;
     }
 
-    public function getFilePathImageGarde(): ?string
-    {
-        return $this->filePathImageGarde;
-    }
-
-    public function setFilePathImageGarde(string $filePathImageGarde): static
-    {
-        $this->filePathImageGarde = $filePathImageGarde;
-
-        return $this;
-    }
- 
  
 
     /**
@@ -351,4 +306,84 @@ class Document
         return $this;
     }
   
+
+ /**
+  * Get the value of imageNameDocument
+  */ 
+ public function getImageNameDocument()
+ {
+  return $this->imageNameDocument;
+ }
+
+ /**
+  * Set the value of imageNameDocument
+  *
+  * @return  self
+  */ 
+ public function setImageNameDocument($imageNameDocument)
+ {
+  $this->imageNameDocument = $imageNameDocument;
+
+  return $this;
+ }
+
+ /**
+  * Get the value of fileMimeTypeDocument
+  */ 
+ public function getFileMimeTypeDocument()
+ {
+  return $this->fileMimeTypeDocument;
+ }
+
+ /**
+  * Set the value of fileMimeTypeDocument
+  *
+  * @return  self
+  */ 
+ public function setFileMimeTypeDocument($fileMimeTypeDocument)
+ {
+  $this->fileMimeTypeDocument = $fileMimeTypeDocument;
+
+  return $this;
+ }
+
+ /**
+  * Get the value of fileSizeDocument
+  */ 
+ public function getFileSizeDocument()
+ {
+  return $this->fileSizeDocument;
+ }
+
+ /**
+  * Set the value of fileSizeDocument
+  *
+  * @return  self
+  */ 
+ public function setFileSizeDocument($fileSizeDocument)
+ {
+  $this->fileSizeDocument = $fileSizeDocument;
+
+  return $this;
+ }
+
+ /**
+  * Get the value of FileNameDocument
+  */ 
+ public function getFileNameDocument()
+ {
+  return $this->FileNameDocument;
+ }
+
+ /**
+  * Set the value of FileNameDocument
+  *
+  * @return  self
+  */ 
+ public function setFileNameDocument($FileNameDocument)
+ {
+  $this->FileNameDocument = $FileNameDocument;
+
+  return $this;
+ }
 }

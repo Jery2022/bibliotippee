@@ -4,16 +4,17 @@ namespace App\Controller\Admin;
 
 use App\Entity\Comment;
 use App\Entity\Document;
+use DateTime;
+use Vich\UploaderBundle\Entity\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class DocumentCrudController extends AbstractCrudController
 {
@@ -25,64 +26,94 @@ class DocumentCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
          return $crud
-            ->setEntityLabelInSingular('Document')
-            ->setEntityLabelInPlural('Documents')
-            ->setSearchFields(['title', 'author', 'fileFormat'])
-            ->setDefaultSort(['id' => 'DESC', 'title' => 'ASC', 'author'=>'ASC','uploaderAuthor'=>'ASC','createdAt' => 'DESC'])
+            ->setEntityLabelInSingular('un document')
+            ->setEntityLabelInPlural('Liste de documents')
+            ->setSearchFields(['title', 'author','lastName', 'firstName', 'role'])
+            ->setDateFormat('dd/MM/yyyy')
+            ->setDateTimeFormat('dd/MM/yyyy - HH:mm:ss')
+            ->setTimeFormat('HH:mm:ss')
+            ->setDecimalSeparator(',')
+            ->setThousandsSeparator(' ')
+            ->setPageTitle('index', 'Liste des documents')
+            ->setPageTitle('new', 'Ajouter un nouveau document')
+            ->setPageTitle('edit', 'Modifier un document')
+            ->setDefaultSort(['id' => 'DESC', 'title' => 'ASC', 'author'=>'ASC','createdAt' => 'DESC'])
             ->setPaginatorPageSize(10);
         }
-
+   /*     
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-        ->add(EntityFilter::new('comment')
-        ->setFormTypeOption('value_type', Comment::class));
+            ->add(EntityFilter::new('ducuments'));
     }
+    */
    
     public function configureFields(string $pageName): iterable
     {
+        $mappingParameter = $this->getParameter('vich_uploader.mappings');
+        $documentMapping = $mappingParameter['document']['uri_prefix'];
+       
         yield IdField::new('id')->hideOnForm();
-        yield TextField::new('title', 'Saisir le titre :');
-        yield TextField::new('author', 'Saisir l\'auteur :');
+        yield TextField::new('title', 'Saisir un titre :');
+        yield TextField::new('author', 'Saisir un auteur :');
         yield TextareaField::new('description', 'Saisir la description du document :');
-        yield TextField::new('filePath')->hideOnForm();
-        yield TextField::new('fileFormat')->hideOnForm();
-        yield TextField::new('taille')->hideOnForm();
-        yield AssociationField::new('users', 'Téléchargé par :')->hideOnForm();
-        yield TextField::new('filePathImageGarde', 'Télécharger le fichier :')->hideOnIndex();
-        
-        $createdAt = DateTimeField::new('createdAt', 'Date de création :')
+
+       
+
+        yield ImageField::new('fileNameDocument')
+        ->setBasePath($documentMapping)
+        ->setLabel('Photo')
+        ->hideOnForm();
+
+        yield TextareaField::new('imageNameDocument')
+        ->hideOnIndex()
+        ->setLabel('Charger un document de type pdf ou epub :')
+        ->setFormType(VichImageType::class, 
+        [
+            'constraints' => [
+                new File([
+                    'maxSize' => '2000k',
+                    'mimeTypes' => [
+                        'document/pdf',
+                        'document/epub',
+                    ],
+                    'mimeTypesMessage' => 'Veuillez télécharger une image valide (pdf, epub) !',
+                ],)
+                ],
+        ],
+    );
+      
+        $createdAt = DateTimeField::new('createdAt')
         ->setFormTypeOptions([
             'years' => range(date('Y'), date('Y') + 5),
             'widget' => 'single_text',
-            ]);
+        ]);
+       // ->setLabel('Date de création');
+
+        $publishAt = DateTimeField::new('publishAt')
+        ->setFormTypeOptions([
+            'years' => range(date('Y'), date('Y') + 5),
+            'widget' => 'single_text',
+        ])
+        ->setLabel('Date de publication');
+
 
         if (Crud::PAGE_EDIT === $pageName) {
-            yield $createdAt->setFormTypeOption('disabled', true);
-            } else {
-            yield $createdAt->hideOnForm();
-           }
+                        yield $createdAt ->setFormTypeOption('disabled', true) ;
+                        yield $publishAt ;
+                    } else {
+                        yield $createdAt;
+                        yield $publishAt;
+                    }  
+       
+    
+     
+        $isPublished = BooleanField::new('isPublished','Status ')
+        ->setHelp('Veuillez cocher pour publier le document.')
+        ->setLabel('Status');
 
-        $isPublished = BooleanField::new('isPublished', 'Voulez-vous le publié ?')->renderAsSwitch();
-            
-        if ($isPublished===false && Crud::PAGE_EDIT === $pageName) {
-                $publishedAt = DateTimeField::new('publishedAt', 'Date de publication :')
-                     ->setFormTypeOptions([
-                        'years' => range(date('Y'), date('Y') + 5),
-                        'widget' => 'single_text',
-                    ]);
+        yield $isPublished;
 
-                yield $publishedAt->setFormTypeOption('disabled', true);
-        } else {
-                yield DateTimeField::new('publishedAt', 'Date de publication :')
-                    ->setFormTypeOptions([
-                       'years' => range(date('Y'), date('Y') + 5),
-                       'widget' => 'single_text',
-                   ])->hideOnForm();
-            }  
-   
-           
-       // yield TextField::new('publishedAt')->hideOnForm();
-    }
+    } 
    
 }
