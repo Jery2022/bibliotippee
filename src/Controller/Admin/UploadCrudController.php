@@ -2,27 +2,27 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Comment;
+use App\Entity\Upload;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class CommentCrudController extends AbstractCrudController
+class UploadCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Comment::class;
+        return Upload::class;
     }
 
- 
+   
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id');
-        yield TextField::new('author');
-        yield TextEditorField::new('content');
-        
-      
+        yield IdField::new('id')->hideOnForm();
+        yield TextField::new('imageName');
+        yield TextEditorField::new('imageFile');
+        yield TextField::new('extensionFile');
+        yield TextField::new('imageSize'); 
     }
-  
+     
 }

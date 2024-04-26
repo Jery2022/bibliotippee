@@ -19,8 +19,9 @@ class Download
     #[ORM\ManyToOne(inversedBy: 'downloads')]
     private ?Document $documents = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'download')]
     private ?User $users = null;
+ 
 
     public function getId(): ?int
     {
@@ -62,4 +63,5 @@ class Download
 
         return $this;
     }
+  
 }

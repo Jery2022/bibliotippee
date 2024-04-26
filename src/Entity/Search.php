@@ -22,11 +22,12 @@ class Search
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'searchs')]
-    private ?User $users = null;
 
     #[ORM\ManyToOne(inversedBy: 'searchs')]
     private ?Document $documents = null;
+
+    #[ORM\ManyToOne(inversedBy: 'search')]
+    private ?User $users = null;
 
     public function getId(): ?int
     {
@@ -69,18 +70,6 @@ class Search
         return $this;
     }
 
-    public function getUsers(): ?User
-    {
-        return $this->users;
-    }
-
-    public function setUsers(?User $users): static
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
     public function getDocuments(): ?Document
     {
         return $this->documents;
@@ -89,6 +78,18 @@ class Search
     public function setDocuments(?Document $documents): static
     {
         $this->documents = $documents;
+
+        return $this;
+    }
+
+    public function getUsers(): ?User
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $users): static
+    {
+        $this->users = $users;
 
         return $this;
     }

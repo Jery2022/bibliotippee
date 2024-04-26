@@ -10,6 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
+    
     public function load(ObjectManager $manager): void
     {
         $id_comments = 0;
@@ -40,7 +41,11 @@ class AppFixtures extends Fixture
             $document->setPublishedAt(new \DateTimeImmutable());
             $document->setFilePathImageGarde('/path/to/image.jpg');
             // Set the associated User entity
-            $document->setUsers($this->getReference('user'));
+        /*    $document->setUsers(add(function (Category $category): string {
+                return $this->getReference('user')};)
+                
+                );*/
+            $document->createdBy($this->getReference('user'));
             $manager->persist($document);
 
         // Creation d'un nouveau commentaire

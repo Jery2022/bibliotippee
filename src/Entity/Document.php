@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\DocumentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
@@ -42,8 +43,7 @@ class Document
     #[ORM\Column(length: 255)]
     private ?string $filePathImageGarde = null;
 
-    #[ORM\ManyToOne(inversedBy: 'documents')]
-    private ?User $users = null;
+     
 
     /**
      * @var Collection<int, Download>
@@ -63,10 +63,29 @@ class Document
     #[ORM\OneToOne(mappedBy: 'documents', cascade: ['persist', 'remove'])]
     private ?Favori $favoris = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'document')]
+    private ?User $users = null;
+
+    /**
+     * @var Collection<int, Upload>
+     */
+    #[ORM\OneToMany(targetEntity: Upload::class, mappedBy: 'document')]
+    private Collection $uploads;
+
+
     public function __construct()
     {
         $this->downloads = new ArrayCollection();
         $this->searchs = new ArrayCollection();
+        $this->uploads = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getId();
     }
 
     public function getId(): ?int
@@ -181,18 +200,8 @@ class Document
 
         return $this;
     }
-
-    public function getUsers(): ?User
-    {
-        return $this->users;
-    }
-
-    public function setUsers(?User $users): static
-    {
-        $this->users = $users;
-
-        return $this;
-    }
+ 
+ 
 
     /**
      * @return Collection<int, Download>
@@ -287,4 +296,59 @@ class Document
 
         return $this;
     }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getUsers(): ?User
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $users): static
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Upload>
+     */
+    public function getUploads(): Collection
+    {
+        return $this->uploads;
+    }
+
+    public function addUpload(Upload $upload): static
+    {
+        if (!$this->uploads->contains($upload)) {
+            $this->uploads->add($upload);
+            $upload->setDocument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUpload(Upload $upload): static
+    {
+        if ($this->uploads->removeElement($upload)) {
+            // set the owning side to null (unless already changed)
+            if ($upload->getDocument() === $this) {
+                $upload->setDocument(null);
+            }
+        }
+
+        return $this;
+    }
+  
 }
