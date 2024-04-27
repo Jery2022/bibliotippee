@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommentRepository;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -14,65 +14,34 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
-
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $contenu = null;
-
-    #[ORM\Column]
-    private ?bool $isPublished = null;
+    private ?string $content = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $photoFilename = null;
-
-    #[ORM\OneToOne(inversedBy: 'comments', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Document $documents = null;
-
     #[ORM\ManyToOne(inversedBy: 'comment')]
     private ?User $users = null;
+
+    #[ORM\Column]
+    private ?bool $isValided = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Document $documents = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getAuthor(): ?string
+    public function getContent(): ?string
     {
-        return $this->author;
+        return $this->content;
     }
 
-    public function setAuthor(string $author): static
+    public function setContent(string $content): static
     {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    public function getContenu(): ?string
-    {
-        return $this->contenu;
-    }
-
-    public function setContenu(string $contenu): static
-    {
-        $this->contenu = $contenu;
-
-        return $this;
-    }
-
-    public function isPublished(): ?bool
-    {
-        return $this->isPublished;
-    }
-
-    public function setPublished(bool $isPublished): static
-    {
-        $this->isPublished = $isPublished;
+        $this->content = $content;
 
         return $this;
     }
@@ -89,14 +58,26 @@ class Comment
         return $this;
     }
 
-    public function getPhotoFilename(): ?string
+    public function getUsers(): ?User
     {
-        return $this->photoFilename;
+        return $this->users;
     }
 
-    public function setPhotoFilename(?string $photoFilename): static
+    public function setUsers(?User $users): static
     {
-        $this->photoFilename = $photoFilename;
+        $this->users = $users;
+
+        return $this;
+    }
+
+    public function isValided(): ?bool
+    {
+        return $this->isValided;
+    }
+
+    public function setIsValided(bool $isValided): static
+    {
+        $this->isValided = $isValided;
 
         return $this;
     }
@@ -106,21 +87,9 @@ class Comment
         return $this->documents;
     }
 
-    public function setDocuments(Document $documents): static
+    public function setDocuments(?Document $documents): static
     {
         $this->documents = $documents;
-
-        return $this;
-    }
-
-    public function getUsers(): ?User
-    {
-        return $this->users;
-    }
-
-    public function setUsers(?User $users): static
-    {
-        $this->users = $users;
 
         return $this;
     }

@@ -86,22 +86,6 @@ class UserCrudController extends AbstractCrudController
                 'Administrateur' => 'ROLE_ADMIN',
                 'Super Administrateur' => 'ROLE_SUPER_ADMIN',
             ]);
-         /*  ->setFormTypeOption('choices',[
-                    'Utilisateur' => 'ROLE_USER',
-                    'Administrateur' => 'ROLE_ADMIN',
-                    'Super Administrateur' => 'ROLE_SUPER_ADMIN',
-                    ]); 
-        yield  TextField::new('urlAvatar', 'Avatar')
-            ->setFormTypeOption('attr.placeholder', 'Saisir l\'url de l\'avatar...')
-          //  ->setFormTypeOption('attr.pattern', '.{2,255}')
-            ->setHelp('Veuillez saisir une url valide !')
-            ->setCustomOption(TextField::OPTION_MAX_LENGTH, 255)            
-            ->setFormTypeOption('attr.type', 'url')            
-            ->setFormTypeOption('attr.title', 'Cliquez pour ouvrir l\'url')
-            ->setFormTypeOption('attr.alt', 'Avatar')            
-            ->setFormTypeOption('attr.width', '100')
-            ->setFormTypeOption('attr.height', '100')            
-            ->setFormTypeOption('attr.required', 'false');*/
 
         yield ImageField::new('imageNameAvatar')
             ->setBasePath($avatarMapping)

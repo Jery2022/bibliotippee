@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} - Liste de commentaires - {{ document }}{% endblock %}
+
+{% block body %}
+    <h2>{{ document }} Document</h2>
+{# 
+    {% if documents|length > 0 %}
+      {% for comment in comments %}
+            
+         {% if users|length > 0 %}
+            {% for user in users %}
+               <h4>{{% comment.user %}
+                     {{ user.firstName }} {{ user.lastName }}
+                     {% if comment.user.imageNameAvatar %}
+                        <img src="{{ asset('images/avatars/' ~ comment.user.imageNameAvatar) }}" style="max-width: 100px" />
+                     {% endif %}
+                  }
+               </h4>
+            {% endfor %}
+         {% endif %}
+
+            <small>
+                {{ comment.createdAt|format_datetime('medium', 'short') }}
+            </small>
+
+            <p>{{ comment.content }}</p>
+      {% endfor %}
+    {% else %}
+        <div>Aucun commentaire na encore été posté pour ce document.</div>
+    {% endif %}
+#}
+{% endblock %}

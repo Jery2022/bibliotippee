@@ -2,9 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Comment;
 use App\Entity\Document;
-use DateTime;
 use Vich\UploaderBundle\Entity\File;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -57,8 +55,6 @@ class DocumentCrudController extends AbstractCrudController
         yield TextField::new('title', 'Saisir un titre :');
         yield TextField::new('author', 'Saisir un auteur :');
         yield TextareaField::new('description', 'Saisir la description du document :');
-
-       
 
         yield ImageField::new('fileNameDocument')
         ->setBasePath($documentMapping)

@@ -40,12 +40,6 @@ class Document
     #[ORM\OneToMany(targetEntity: Search::class, mappedBy: 'documents')]
     private Collection $searchs;
 
-    #[ORM\OneToOne(mappedBy: 'documents', cascade: ['persist', 'remove'])]
-    private ?Comment $comments = null;
-
-    #[ORM\OneToOne(mappedBy: 'documents', cascade: ['persist', 'remove'])]
-    private ?Favori $favoris = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -61,22 +55,44 @@ class Document
    
  // NOTE: This is not a mapped field of entity metadata, just a simple property.
  #[Vich\UploadableField(mapping: 'document', fileNameProperty: 'fileNameDocument', size: 'fileSizeDocument', mimeType: 'fileMimeTypeDocument')]
- private ?File $imageNameDocument = null;
+                                                       private ?File $imageNameDocument = null;
 
  #[ORM\Column(nullable: true)]
- private ?string $FileNameDocument = null;
+                                                       private ?string $FileNameDocument = null;
 
  #[ORM\Column(nullable: true)]
- private ?int $fileSizeDocument = null;
+                                                       private ?int $fileSizeDocument = null;
 
  #[ORM\Column(length:50, nullable: true)]
- private ?string $fileMimeTypeDocument = null;
+                                                       private ?string $fileMimeTypeDocument = null;
 
  #[ORM\Column(nullable: true)]
- private ?\DateTimeImmutable $createdAt = null;
+                                                       private ?\DateTimeImmutable $createdAt = null;
 
  #[ORM\Column(nullable: true)]
- private ?\DateTimeImmutable $publishAt = null;
+                                                       private ?\DateTimeImmutable $publishAt = null;
+
+    /**
+     * @var Collection<int, Favori>
+     */
+    #[ORM\OneToMany(targetEntity: Favori::class, mappedBy: 'documents')]
+    private Collection $favoris;
+
+    /**
+     * @var Collection<int, Comment>
+     */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'documents')]
+    private Collection $comments;
+
+    #[ORM\ManyToOne(inversedBy: 'documents')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?PeriodeSearch $periodeSearch = null;
+
+    /**
+     * @var Collection<int, WordSearch>
+     */
+    #[ORM\ManyToMany(targetEntity: WordSearch::class, mappedBy: 'documents')]
+    private Collection $wordSearches;
 
 
     public function __construct()
@@ -84,6 +100,9 @@ class Document
         $this->downloads = new ArrayCollection();
         $this->searchs = new ArrayCollection();
         $this->uploads = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->wordSearches = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -218,40 +237,6 @@ class Document
         return $this;
     }
 
-    public function getComments(): ?Comment
-    {
-        return $this->comments;
-    }
-
-    public function setComments(Comment $comments): static
-    {
-        // set the owning side of the relation if necessary
-        if ($comments->getDocuments() !== $this) {
-            $comments->setDocuments($this);
-        }
-
-        $this->comments = $comments;
-
-        return $this;
-    }
-
-    public function getFavoris(): ?Favori
-    {
-        return $this->favoris;
-    }
-
-    public function setFavoris(Favori $favoris): static
-    {
-        // set the owning side of the relation if necessary
-        if ($favoris->getDocuments() !== $this) {
-            $favoris->setDocuments($this);
-        }
-
-        $this->favoris = $favoris;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -311,9 +296,9 @@ class Document
   * Get the value of imageNameDocument
   */ 
  public function getImageNameDocument()
- {
-  return $this->imageNameDocument;
- }
+                                                       {
+                                                        return $this->imageNameDocument;
+                                                       }
 
  /**
   * Set the value of imageNameDocument
@@ -321,19 +306,19 @@ class Document
   * @return  self
   */ 
  public function setImageNameDocument($imageNameDocument)
- {
-  $this->imageNameDocument = $imageNameDocument;
-
-  return $this;
- }
+                                                       {
+                                                        $this->imageNameDocument = $imageNameDocument;
+                                                      
+                                                        return $this;
+                                                       }
 
  /**
   * Get the value of fileMimeTypeDocument
   */ 
  public function getFileMimeTypeDocument()
- {
-  return $this->fileMimeTypeDocument;
- }
+                                                       {
+                                                        return $this->fileMimeTypeDocument;
+                                                       }
 
  /**
   * Set the value of fileMimeTypeDocument
@@ -341,19 +326,19 @@ class Document
   * @return  self
   */ 
  public function setFileMimeTypeDocument($fileMimeTypeDocument)
- {
-  $this->fileMimeTypeDocument = $fileMimeTypeDocument;
-
-  return $this;
- }
+                                                       {
+                                                        $this->fileMimeTypeDocument = $fileMimeTypeDocument;
+                                                      
+                                                        return $this;
+                                                       }
 
  /**
   * Get the value of fileSizeDocument
   */ 
  public function getFileSizeDocument()
- {
-  return $this->fileSizeDocument;
- }
+                                                       {
+                                                        return $this->fileSizeDocument;
+                                                       }
 
  /**
   * Set the value of fileSizeDocument
@@ -361,19 +346,19 @@ class Document
   * @return  self
   */ 
  public function setFileSizeDocument($fileSizeDocument)
- {
-  $this->fileSizeDocument = $fileSizeDocument;
-
-  return $this;
- }
+                                                       {
+                                                        $this->fileSizeDocument = $fileSizeDocument;
+                                                      
+                                                        return $this;
+                                                       }
 
  /**
   * Get the value of FileNameDocument
   */ 
  public function getFileNameDocument()
- {
-  return $this->FileNameDocument;
- }
+                                                       {
+                                                        return $this->FileNameDocument;
+                                                       }
 
  /**
   * Set the value of FileNameDocument
@@ -381,9 +366,108 @@ class Document
   * @return  self
   */ 
  public function setFileNameDocument($FileNameDocument)
- {
-  $this->FileNameDocument = $FileNameDocument;
+                                                       {
+                                                        $this->FileNameDocument = $FileNameDocument;
+                                                      
+                                                        return $this;
+                                                       }
 
-  return $this;
- }
+    /**
+     * @return Collection<int, Favori>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Favori $favori): static
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris->add($favori);
+            $favori->setDocuments($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Favori $favori): static
+    {
+        if ($this->favoris->removeElement($favori)) {
+            // set the owning side to null (unless already changed)
+            if ($favori->getDocuments() === $this) {
+                $favori->setDocuments(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setDocuments($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getDocuments() === $this) {
+                $comment->setDocuments(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPeriodeSearch(): ?PeriodeSearch
+    {
+        return $this->periodeSearch;
+    }
+
+    public function setPeriodeSearch(?PeriodeSearch $periodeSearch): static
+    {
+        $this->periodeSearch = $periodeSearch;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WordSearch>
+     */
+    public function getWordSearches(): Collection
+    {
+        return $this->wordSearches;
+    }
+
+    public function addWordSearch(WordSearch $wordSearch): static
+    {
+        if (!$this->wordSearches->contains($wordSearch)) {
+            $this->wordSearches->add($wordSearch);
+            $wordSearch->addDocument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWordSearch(WordSearch $wordSearch): static
+    {
+        if ($this->wordSearches->removeElement($wordSearch)) {
+            $wordSearch->removeDocument($this);
+        }
+
+        return $this;
+    }
 }

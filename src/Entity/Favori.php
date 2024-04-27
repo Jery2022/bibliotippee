@@ -20,12 +20,13 @@ class Favori
     private ?\DateTimeImmutable $createdAt = null;
 
 
-    #[ORM\OneToOne(inversedBy: 'favoris', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Document $documents = null;
+   
 
     #[ORM\ManyToOne(inversedBy: 'favori')]
     private ?User $users = null;
+
+    #[ORM\ManyToOne(inversedBy: 'favoris')]
+    private ?Document $documents = null;
 
     public function getId(): ?int
     {
@@ -37,7 +38,7 @@ class Favori
         return $this->isFavoris;
     }
 
-    public function setFavoris(?bool $isFavoris): static
+    public function setIsFavoris(?bool $isFavoris): static
     {
         $this->isFavoris = $isFavoris;
 
@@ -56,18 +57,7 @@ class Favori
         return $this;
     }
 
-    public function getDocuments(): ?Document
-    {
-        return $this->documents;
-    }
-
-    public function setDocuments(Document $documents): static
-    {
-        $this->documents = $documents;
-
-        return $this;
-    }
-
+  
     public function getUsers(): ?User
     {
         return $this->users;
@@ -76,6 +66,18 @@ class Favori
     public function setUsers(?User $users): static
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    public function getDocuments(): ?Document
+    {
+        return $this->documents;
+    }
+
+    public function setDocuments(?Document $documents): static
+    {
+        $this->documents = $documents;
 
         return $this;
     }
