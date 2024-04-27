@@ -38,13 +38,7 @@ class DocumentCrudController extends AbstractCrudController
             ->setDefaultSort(['id' => 'DESC', 'title' => 'ASC', 'author'=>'ASC','createdAt' => 'DESC'])
             ->setPaginatorPageSize(10);
         }
-   /*     
-    public function configureFilters(Filters $filters): Filters
-    {
-        return $filters
-            ->add(EntityFilter::new('ducuments'));
-    }
-    */
+  
    
     public function configureFields(string $pageName): iterable
     {

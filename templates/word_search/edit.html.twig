@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit WordSearch{% endblock %}
+
+{% block body %}
+    <h1>Edit WordSearch</h1>
+
+    {{ include('word_search/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_word_search_index') }}">back to list</a>
+
+    {{ include('word_search/_delete_form.html.twig') }}
+{% endblock %}

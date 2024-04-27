@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\WordSearchRepository;
+use App\Repository\PeriodSearchRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: WordSearchRepository::class)]
-class WordSearch
+#[ORM\Entity(repositoryClass: PeriodSearchRepository::class)]
+class PeriodSearch
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,12 +16,12 @@ class WordSearch
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $wordKey = null;
+    private ?string $period = null;
 
     /**
      * @var Collection<int, Search>
      */
-    #[ORM\ManyToMany(targetEntity: Search::class, mappedBy: 'wordSearchKey')]
+    #[ORM\ManyToMany(targetEntity: Search::class, mappedBy: 'period')]
     private Collection $searches;
 
     public function __construct()
@@ -29,25 +29,24 @@ class WordSearch
         $this->searches = new ArrayCollection();
     }
 
-
     public function __toString(): string
     {
-        return $this->wordKey;
+        return $this->getPeriod();
     }
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->id;  
     }
 
-    public function getWordKey(): ?string
+    public function getPeriod(): ?string
     {
-        return $this->wordKey;
+        return $this->period;
     }
 
-    public function setWordKey(string $wordKey): static
+    public function setPeriod(string $period): static
     {
-        $this->wordKey = $wordKey;
+        $this->period = $period;
 
         return $this;
     }
@@ -64,7 +63,7 @@ class WordSearch
     {
         if (!$this->searches->contains($search)) {
             $this->searches->add($search);
-            $search->addWordSearchKey($this);
+            $search->addPeriod($this);
         }
 
         return $this;
@@ -73,7 +72,7 @@ class WordSearch
     public function removeSearch(Search $search): static
     {
         if ($this->searches->removeElement($search)) {
-            $search->removeWordSearchKey($this);
+            $search->removePeriod($this);
         }
 
         return $this;

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New WordSearch{% endblock %}
+
+{% block body %}
+    <h1>Create new WordSearch</h1>
+
+    {{ include('word_search/_form.html.twig') }}
+
+    <a href="{{ path('app_word_search_index') }}">back to list</a>
+{% endblock %}

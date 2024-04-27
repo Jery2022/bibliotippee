@@ -6,7 +6,6 @@ use App\Entity\Search;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -34,15 +33,15 @@ class SearchCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id', 'ID')->onlyOnIndex();
+        yield IdField::new('id', 'ID')->hideOnForm();
         yield AssociationField::new('users', 'ID User');
-        yield AssociationField::new('documents', 'ID Document');
-        yield TextField::new('wordKey', 'Mots clés')
+        yield AssociationField::new('documents', 'Titre du Document');
+        yield AssociationField::new('wordSearchKey', 'Mots clés')
                 ->setHelp('Veuillez saisir le mot clé de la recherche.')
                 ->setLabel('Mot clé');
-        yield TextField::new('periode', 'Période :')
+        yield AssociationField::new('period', 'Période :')
                 ->setHelp('Veuillez saisir la période de la recherche.')
-                ->setLabel('Période');
+                ->setLabel('Périod');
         
         $createdAt = DateTimeField::new('createdAt')
         ->setFormTypeOptions([

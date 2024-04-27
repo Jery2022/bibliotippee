@@ -55,22 +55,22 @@ class Document
    
  // NOTE: This is not a mapped field of entity metadata, just a simple property.
  #[Vich\UploadableField(mapping: 'document', fileNameProperty: 'fileNameDocument', size: 'fileSizeDocument', mimeType: 'fileMimeTypeDocument')]
-                                                       private ?File $imageNameDocument = null;
+                    private ?File $imageNameDocument = null;
 
  #[ORM\Column(nullable: true)]
-                                                       private ?string $FileNameDocument = null;
+                   private ?string $FileNameDocument = null;
 
  #[ORM\Column(nullable: true)]
-                                                       private ?int $fileSizeDocument = null;
+                   private ?int $fileSizeDocument = null;
 
  #[ORM\Column(length:50, nullable: true)]
-                                                       private ?string $fileMimeTypeDocument = null;
+                   private ?string $fileMimeTypeDocument = null;
 
  #[ORM\Column(nullable: true)]
-                                                       private ?\DateTimeImmutable $createdAt = null;
+                   private ?\DateTimeImmutable $createdAt = null;
 
  #[ORM\Column(nullable: true)]
-                                                       private ?\DateTimeImmutable $publishAt = null;
+                   private ?\DateTimeImmutable $publishAt = null;
 
     /**
      * @var Collection<int, Favori>
@@ -83,18 +83,7 @@ class Document
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'documents')]
     private Collection $comments;
-
-    #[ORM\ManyToOne(inversedBy: 'documents')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?PeriodeSearch $periodeSearch = null;
-
-    /**
-     * @var Collection<int, WordSearch>
-     */
-    #[ORM\ManyToMany(targetEntity: WordSearch::class, mappedBy: 'documents')]
-    private Collection $wordSearches;
-
-
+   
     public function __construct()
     {
         $this->downloads = new ArrayCollection();
@@ -102,12 +91,11 @@ class Document
         $this->uploads = new ArrayCollection();
         $this->favoris = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->wordSearches = new ArrayCollection();
     }
 
     public function __toString(): string
     {
-        return $this->getId();
+        return $this->getTitle();
     }
 
     public function getId(): ?int
@@ -296,49 +284,48 @@ class Document
   * Get the value of imageNameDocument
   */ 
  public function getImageNameDocument()
-                                                       {
-                                                        return $this->imageNameDocument;
-                                                       }
-
+                {
+                   return $this->imageNameDocument;
+                }
  /**
   * Set the value of imageNameDocument
   *
   * @return  self
   */ 
  public function setImageNameDocument($imageNameDocument)
-                                                       {
-                                                        $this->imageNameDocument = $imageNameDocument;
-                                                      
-                                                        return $this;
-                                                       }
+                {
+                 $this->imageNameDocument = $imageNameDocument;
+                 return $this;
+                }
+
 
  /**
   * Get the value of fileMimeTypeDocument
   */ 
- public function getFileMimeTypeDocument()
-                                                       {
-                                                        return $this->fileMimeTypeDocument;
-                                                       }
-
+  public function getFileMimeTypeDocument()
+  {
+      return $this->fileMimeTypeDocument;
+    }
+    
  /**
   * Set the value of fileMimeTypeDocument
   *
   * @return  self
   */ 
  public function setFileMimeTypeDocument($fileMimeTypeDocument)
-                                                       {
-                                                        $this->fileMimeTypeDocument = $fileMimeTypeDocument;
-                                                      
-                                                        return $this;
-                                                       }
+                {
+                    $this->fileMimeTypeDocument = $fileMimeTypeDocument;
+                   return $this;
+                }
+
 
  /**
   * Get the value of fileSizeDocument
   */ 
  public function getFileSizeDocument()
-                                                       {
-                                                        return $this->fileSizeDocument;
-                                                       }
+                {
+                    return $this->fileSizeDocument;
+                }
 
  /**
   * Set the value of fileSizeDocument
@@ -346,31 +333,30 @@ class Document
   * @return  self
   */ 
  public function setFileSizeDocument($fileSizeDocument)
-                                                       {
-                                                        $this->fileSizeDocument = $fileSizeDocument;
-                                                      
-                                                        return $this;
-                                                       }
+                {
+                   $this->fileSizeDocument = $fileSizeDocument;
+                    return $this;
+                }
+
 
  /**
   * Get the value of FileNameDocument
   */ 
  public function getFileNameDocument()
-                                                       {
-                                                        return $this->FileNameDocument;
-                                                       }
-
+                {
+                   return $this->FileNameDocument;
+                }
  /**
   * Set the value of FileNameDocument
   *
   * @return  self
   */ 
  public function setFileNameDocument($FileNameDocument)
-                                                       {
-                                                        $this->FileNameDocument = $FileNameDocument;
-                                                      
-                                                        return $this;
-                                                       }
+                {
+                   $this->FileNameDocument = $FileNameDocument;
+                   return $this;
+                }
+
 
     /**
      * @return Collection<int, Favori>
@@ -427,45 +413,6 @@ class Document
             if ($comment->getDocuments() === $this) {
                 $comment->setDocuments(null);
             }
-        }
-
-        return $this;
-    }
-
-    public function getPeriodeSearch(): ?PeriodeSearch
-    {
-        return $this->periodeSearch;
-    }
-
-    public function setPeriodeSearch(?PeriodeSearch $periodeSearch): static
-    {
-        $this->periodeSearch = $periodeSearch;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, WordSearch>
-     */
-    public function getWordSearches(): Collection
-    {
-        return $this->wordSearches;
-    }
-
-    public function addWordSearch(WordSearch $wordSearch): static
-    {
-        if (!$this->wordSearches->contains($wordSearch)) {
-            $this->wordSearches->add($wordSearch);
-            $wordSearch->addDocument($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWordSearch(WordSearch $wordSearch): static
-    {
-        if ($this->wordSearches->removeElement($wordSearch)) {
-            $wordSearch->removeDocument($this);
         }
 
         return $this;

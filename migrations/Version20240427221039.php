@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240427102540 extends AbstractMigration
+final class Version20240427221039 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,17 +20,15 @@ final class Version20240427102540 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX uniq_9474526c5f0f2752');
-        $this->addSql('ALTER TABLE comment ALTER documents_id DROP NOT NULL');
-        $this->addSql('CREATE INDEX IDX_9474526C5F0F2752 ON comment (documents_id)');
+        $this->addSql('ALTER TABLE search DROP word_keys');
+        $this->addSql('ALTER TABLE search DROP periode');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('DROP INDEX IDX_9474526C5F0F2752');
-        $this->addSql('ALTER TABLE comment ALTER documents_id SET NOT NULL');
-        $this->addSql('CREATE UNIQUE INDEX uniq_9474526c5f0f2752 ON comment (documents_id)');
+        $this->addSql('ALTER TABLE search ADD word_keys VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE search ADD periode VARCHAR(255) NOT NULL');
     }
 }
