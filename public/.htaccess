@@ -18,7 +18,7 @@
 #    Options -MultiViews
 #</IfModule>
 
-<IfModule mod_rewrite.c>
+#<IfModule mod_rewrite.c>
     # This Option needs to be enabled for RewriteRule, otherwise it will show an error like
     # 'Options FollowSymLinks or SymLinksIfOwnerMatch is off which implies that RewriteRule directive is forbidden'
 #    Options +SymLinksIfOwnerMatch
@@ -36,8 +36,8 @@
  #   RewriteRule .* - [E=BASE:%1]
 
     # Sets the HTTP_AUTHORIZATION header removed by Apache
-    RewriteCond %{HTTP:Authorization} .+
-    RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
+    #RewriteCond %{HTTP:Authorization} .+
+    #RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
 
     # Redirect to URI without front controller to prevent duplicate content
     # (with and without `/index.php`). Only do this redirect on the initial
@@ -56,9 +56,9 @@
     # If the requested filename exists, simply serve it.
     # We only want to let Apache serve files and not directories.
     # Rewrite all other queries to the front controller.
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ %{ENV:BASE}/index.php [L]
-</IfModule>
+    #RewriteCond %{REQUEST_FILENAME} !-f
+    #RewriteRule ^ %{ENV:BASE}/index.php [L]
+#</IfModule>
 
 #<IfModule !mod_rewrite.c>
 #    <IfModule mod_alias.c>
