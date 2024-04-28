@@ -1,19 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DocumentController!{% endblock %}
+{% block title %}Document{% endblock %}
 
 {% block body %}
+    <h1>Liste des documents numériques</h1>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>IsPublished</th>
+                <th>Description</th>
+                <th>FileNameDocument</th>
+                <th>FileSizeDocument</th>
+                <th>FileMimeTypeDocument</th>
+                <th>CreatedAt</th>
+                <th>PublishAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for document in documents %}
+            <tr>
+                <td>{{ document.id }}</td>
+                <td>{{ document.title }}</td>
+                <td>{{ document.author }}</td>
+                <td>{{ document.isPublished ? 'Yes' : 'No' }}</td>
+                <td>{{ document.description }}</td>
+                <td>{{ document.FileNameDocument }}</td>
+                <td>{{ document.fileSizeDocument }}</td>
+                <td>{{ document.fileMimeTypeDocument }}</td>
+                <td>{{ document.createdAt ? document.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ document.publishAt ? document.publishAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_document_show', {'id': document.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-<div class="example-wrapper">
-    <h1>Liste de nos documents en archive numérique</h1>
- {# {% for document in documents %} #}
-        <h2>{{ document}}</h2>
-        <p>
-            <img src="{{ asset('images/documents/' ~ document) }}" style="max-width: 200px" />
-        </p>
-       <p>
-           <a href="/document/{{ document }}">Voir détails</a>
-        </p>
-</div>
 {% endblock %}

@@ -1,0 +1,19 @@
+// Then import Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Variable overrides first
+$primary: #28a745;
+$bg-body-primary: #f5f8ff;
+$bg-body-secondary: #f8f9fa;
+$bg-body-tertiary: #3e3e3f;
+$enable-shadows: true;
+$prefix: 'mo-';
+
+body {
+  background-color: $bg-body-primary;
+}
+
+button {
+  background-color: $primary;
+  border-color: $primary;
+}

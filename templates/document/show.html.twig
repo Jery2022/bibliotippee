@@ -1,33 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} - Liste de commentaires - {{ document }}{% endblock %}
+{% block title %}Document{% endblock %}
 
 {% block body %}
-    <h2>{{ document }} Document</h2>
-{# 
-    {% if documents|length > 0 %}
-      {% for comment in comments %}
-            
-         {% if users|length > 0 %}
-            {% for user in users %}
-               <h4>{{% comment.user %}
-                     {{ user.firstName }} {{ user.lastName }}
-                     {% if comment.user.imageNameAvatar %}
-                        <img src="{{ asset('images/avatars/' ~ comment.user.imageNameAvatar) }}" style="max-width: 100px" />
-                     {% endif %}
-                  }
-               </h4>
-            {% endfor %}
-         {% endif %}
+    <h1>Document</h1>
 
-            <small>
-                {{ comment.createdAt|format_datetime('medium', 'short') }}
-            </small>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ document.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ document.title }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ document.author }}</td>
+            </tr>
+            <tr>
+                <th>IsPublished</th>
+                <td>{{ document.isPublished ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ document.description }}</td>
+            </tr>
+            <tr>
+                <th>FileNameDocument</th>
+                <td>{{ document.FileNameDocument }}</td>
+            </tr>
+            <tr>
+                <th>FileSizeDocument</th>
+                <td>{{ document.fileSizeDocument }}</td>
+            </tr>
+            <tr>
+                <th>FileMimeTypeDocument</th>
+                <td>{{ document.fileMimeTypeDocument }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ document.createdAt ? document.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>PublishAt</th>
+                <td>{{ document.publishAt ? document.publishAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
 
-            <p>{{ comment.content }}</p>
-      {% endfor %}
-    {% else %}
-        <div>Aucun commentaire na encore été posté pour ce document.</div>
-    {% endif %}
-#}
+    <a href="{{ path('app_document_index') }}">back to list</a>
+
+    <a href="{{ path('app_document_edit', {'id': document.id}) }}">edit</a>
+
+    {{ include('document/_delete_form.html.twig') }}
 {% endblock %}

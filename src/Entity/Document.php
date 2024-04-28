@@ -95,7 +95,7 @@ class Document
 
     public function __toString(): string
     {
-        return $this->getTitle();
+        return $this->getID();
     }
 
     public function getId(): ?int

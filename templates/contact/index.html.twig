@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+ <div >
+    <div style="background-color: #f0f0f0;">
+        <img src="{{ asset('assets/images/logo/Logo-cntippee100.jpg') }}" width="100px" alt="logo_cntippee">
+        <h1>{{ websiteName }}</h1>
+    </div>
+
+    <div style="background-color: #d0d0d0;">
+        <h2>Contactez-nous</h2>
+        <form action="/send-email" method="post">
+            <label for="email">Votre email :</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="message">Votre message :</label><br>
+            <textarea id="message" name="message"></textarea><br>
+            <input type="submit" value="Envoyer">
+        </form>
+    </div>
+</div>
+{% endblock %}
