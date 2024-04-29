@@ -70,7 +70,7 @@ Pour le back :
 
 ## Apprendre plus sur Symfony
 
-Vous pouvez en apprendre plus en consultant la document officielle à travers le lien : https://symfony.com/.
+Vous pouvez en apprendre plus en consultant la documentation officielle à travers le lien : https://symfony.com/.
 
 ## Apprendre plus sur Heroku
 
