@@ -26,9 +26,9 @@ class DashboardController extends AbstractDashboardController
         // return parent::index();
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
-        
-       // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-       // return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
+
+        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+        // return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
 
         // Option 2. You can make your dashboard redirect to different pages depending on the user
         //
@@ -45,15 +45,16 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Bibliotippee');
+            ->setTitle('BiblioTIPPEE');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard');
+        yield MenuItem::linkToDashboard('Dashboard', 'fas fa-home');
+        yield MenuItem::section('__________________');
         yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-users', User::class);
         yield MenuItem::linkToCrud('Documents', 'fas fa-map-marker-alt', Document::class);
-        yield MenuItem::section('voir les données')
+        yield MenuItem::section('__________________')
             ->setPermission('ROLE_ADMIN', 'ROLE_SUPER_ADMIN');
         yield MenuItem::linkToCrud('Téléchargement', 'fa-solid fa-circle-down', Download::class);
         yield MenuItem::linkToCrud('Favoris', 'fa-solid fa-heart', Favori::class);
@@ -61,6 +62,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Commentaires', 'fas fa-comments', Comment::class);
         yield MenuItem::linkToCrud('Mot Clés', 'fa-regular fa-pen-to-square', WordSearch::class);
         yield MenuItem::linkToCrud('Périodes', 'fa-regular fa-calendar-check', PeriodSearch::class);
-        yield MenuItem::linkToRoute('Retour au site web', 'fas fa-home', 'homepage');
     }
 }

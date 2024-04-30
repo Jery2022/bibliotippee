@@ -11,36 +11,36 @@ class PageController extends AbstractController
     #[Route('/', name: 'app_page')]
     public function index(): Response
     {
-        $websiteName = 'BiblioTIPPEE';        
+        $websiteName = 'BiblioTIPPEE';
         return $this->render('page/index.html.twig', [
-                       'websiteName' => $websiteName,
-                   ]); 
+            'websiteName' => $websiteName,
+        ]);
     }
 
     #[Route('/catalogue', name: 'app_catalogue')]
     public function catalogue(): Response
     {
-        $websiteName = 'BiblioTIPPEE';        
+        $websiteName = 'BiblioTIPPEE';
         return $this->render('catalogue/index.html.twig', [
-                       'websiteName' => $websiteName,
-                   ]); 
+            'websiteName' => $websiteName,
+        ]);
     }
 
     #[Route('/thematique', name: 'app_thematique')]
     public function thematique(): Response
     {
-        $websiteName = 'BiblioTIPPEE';        
+        $websiteName = 'BiblioTIPPEE';
         return $this->render('thematique/index.html.twig', [
-                       'websiteName' => $websiteName,
-                   ]); 
+            'websiteName' => $websiteName,
+        ]);
     }
 
     #[Route('/contact', name: 'app_contact')]
     public function contact(): Response
     {
-        $websiteName = 'BiblioTIPPEE';        
+        $websiteName = 'BiblioTIPPEE';
         return $this->render('contact/index.html.twig', [
-                       'websiteName' => $websiteName,
-                   ]); 
+            'websiteName' => $websiteName,
+        ]);
     }
 }
