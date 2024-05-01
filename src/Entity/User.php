@@ -34,8 +34,8 @@ class User
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $urlAvatar = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $role = null;
+    #[ORM\Column]
+    private array $roles = [];
 
     /**
      * @var Collection<int, Favori>
@@ -81,7 +81,7 @@ class User
 
     public function __toString(): string
     {
-        return $this->getId();
+        return $this->getPseudo();
     }
 
     public function getId(): ?int
@@ -149,17 +149,30 @@ class User
         return $this;
     }
 
-    public function getRole(): ?string
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
     {
-        return $this->role;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setRole(string $role): static
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
+
 
     /**
      * @return Collection<int, Favori>
@@ -325,7 +338,7 @@ class User
 
     public function getFullName()
     {
-        return $this->getFirstName().' '.$this->getLastName();
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
     #[Vich\UploadableField(mapping: 'avatar', fileNameProperty: 'imageNameAvatar', size: 'imageSizeAvatar')]
@@ -376,4 +389,13 @@ class User
         return $this->imageSizeAvatar;
     }
 
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
 }

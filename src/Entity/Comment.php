@@ -29,6 +29,9 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Document $documents = null;
 
+    #[ORM\Column]
+    private ?int $rate = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Comment
     public function setDocuments(?Document $documents): static
     {
         $this->documents = $documents;
+
+        return $this;
+    }
+
+    public function getRate(): ?int
+    {
+        return $this->rate;
+    }
+
+    public function setRate(int $rate): static
+    {
+        $this->rate = $rate;
 
         return $this;
     }
