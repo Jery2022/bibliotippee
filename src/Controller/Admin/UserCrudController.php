@@ -19,6 +19,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -41,7 +43,7 @@ class UserCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('un utilisateur')
             ->setEntityLabelInPlural('Liste des utilistaeurs')
             ->setSearchFields(['lastName', 'firstName', 'role'])
-            ->setDefaultSort(['lastName' => 'ASC'])
+            ->setDefaultSort(['id' => 'DESC'])
             ->setDateFormat('dd/MM/yyyy')
             ->setDateTimeFormat('dd/MM/yyyy - HH:mm:ss')
             ->setTimeFormat('HH:mm:ss')
@@ -62,89 +64,86 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+
         $mappingParameter = $this->getParameter('vich_uploader.mappings');
         $avatarMapping = $mappingParameter['avatar']['uri_prefix'];
 
-        yield  IdField::new('id')->hideOnForm();
-        yield  TextField::new('pseudo')
-            ->setLabel('Pseudo : ')
-            ->setCustomOption(TextField::OPTION_MAX_LENGTH, 20)
-            ->setFormTypeOption('attr.placeholder', 'Saisir le pseudo...')
-            ->setFormTypeOption('attr.pattern', '.{2,20}')
-            ->setHelp('Veuillez saisir un pseudo de 2 à 20 caractères !')
-            ->setRequired(false);
+        $fields = [
+            IdField::new('id')->hideOnForm(),
+            TextField::new('pseudo')
+                ->setLabel('Pseudo : ')
+                ->setCustomOption(TextField::OPTION_MAX_LENGTH, 20)
+                ->setFormTypeOption('attr.placeholder', 'Saisir le pseudo...')
+                ->setFormTypeOption('attr.pattern', '.{2,20}')
+                ->setRequired(false),
+            TextField::new('lastName')
+                ->setLabel('Nom de famille: ')
+                ->setCustomOption(TextField::OPTION_MAX_LENGTH, 20)
+                ->setFormTypeOption('attr.placeholder', 'Saisir le nom de famille...')
+                ->setFormTypeOption('attr.pattern', '.{2,20}'),
 
-        yield  TextField::new('lastName')
-            ->setLabel('Nom de famille: ')
-            ->setCustomOption(TextField::OPTION_MAX_LENGTH, 20)
-            ->setFormTypeOption('attr.placeholder', 'Saisir le nom de famille...')
-            ->setFormTypeOption('attr.pattern', '.{2,20}');
+            TextField::new('firstName', 'Prénom')
+                ->setCustomOption(TextField::OPTION_MAX_LENGTH, 20)
+                ->setFormTypeOption('attr.placeholder', 'Saisir le prénom...')
+                ->setFormTypeOption('attr.pattern', '.{2,20}'),
 
-        yield  TextField::new('firstName', 'Prénom')
-            ->setCustomOption(TextField::OPTION_MAX_LENGTH, 20)
-            ->setFormTypeOption('attr.placeholder', 'Saisir le prénom...')
-            ->setFormTypeOption('attr.pattern', '.{2,20}');
+            EmailField::new('email', 'Email')
+                ->setRequired(true)
+                ->setCustomOption(TextField::OPTION_MAX_LENGTH, 50)
+                ->setFormTypeOption('attr.placeholder', 'Saisir l\'email...')
+                ->setFormTypeOption('attr.pattern', '.{2,50}'),
 
-        yield  EmailField::new('email', 'Email')
-            ->setRequired(true)
-            ->setHelp('Veuillez saisir une adresse email valide !')
-            ->setCustomOption(TextField::OPTION_MAX_LENGTH, 50)
-            ->setFormTypeOption('attr.placeholder', 'Saisir l\'email...')
-            ->setFormTypeOption('attr.pattern', '.{2,50}');
+            ImageField::new('imageNameAvatar')
+                ->setBasePath($avatarMapping)
+                ->setLabel('Avatar')
+                ->hideOnForm(),
 
-        $password = TextField::new('password', 'Mot de passe')
-            ->setFormTypeOption('attr.placeholder', 'Saisir le mot de passe...')
-            ->setFormTypeOption('attr.pattern', '.{8,}')
-            ->setFormTypeOption('attr.type', 'password')
-            ->setHelp('Veuillez saisir un mot de passe de 8 caractères minimum !');
+            ChoiceField::new('roles', 'Rôle')
+                ->renderExpanded(true)
+                ->setRequired(true)
+                ->setFormTypeOption('attr.placeholder', 'Sélectionner un rôle...')
+                ->setChoices([
+                    'Utilisateur' => 'ROLE_USER',
+                    'Administrateur' => 'ROLE_ADMIN',
+                    'Super Administrateur' => 'ROLE_SUPER_ADMIN',
+                ])
+                ->allowMultipleChoices()
+                ->renderExpanded(),
 
-        if ($pageName === Crud::PAGE_EDIT) {
-            yield  $password->setDisabled();
-        } else {
-            yield  $password;
-        }
-
-        yield  ChoiceField::new('roles', 'Rôle')
-            ->renderExpanded(true)
-            ->setRequired(true)
-            ->setHelp('Veuillez choisir un rôle !')
-            ->setFormTypeOption('attr.placeholder', 'Sélectionner un rôle...')
-            ->setChoices([
-                'Utilisateur' => '["ROLE_USER"]',
-                'Administrateur' => '["ROLE_ADMIN"]',
-                'Super Administrateur' => '["ROLE_SUPER_ADMIN"]',
-            ])
-            ->allowMultipleChoices()
-            ->renderExpanded();
-
-        yield ImageField::new('imageNameAvatar')
-            ->setBasePath($avatarMapping)
-            ->setLabel('Avatar')
-            ->hideOnForm();
-
-        $imageFileAvatar = TextareaField::new('imageFileAvatar', 'Selectionner votre Avatar')
-            ->hideOnIndex()
-            ->setFormType(
-                VichImageType::class,
-                [
-                    'constraints' => [
-                        new File([
-                            'maxSize' => '2000k',
-                            'mimeTypes' => [
-                                'image/jpeg',
-                                'image/png',
-                            ],
-                            'mimeTypesMessage' => 'Veuillez télécharger une image valide (jpeg, png) !',
-                        ],)
+            TextareaField::new('imageFileAvatar', 'Selectionner votre Avatar')
+                ->hideOnIndex()
+                ->onlyWhenCreating()
+                ->setFormType(
+                    VichImageType::class,
+                    [
+                        'constraints' => [
+                            new File([
+                                'maxSize' => '2000k',
+                                'mimeTypes' => [
+                                    'image/jpeg',
+                                    'image/png',
+                                ],
+                                'mimeTypesMessage' => 'Veuillez télécharger une image valide (jpeg, png) !',
+                            ],)
+                        ],
                     ],
-                ],
-            );
+                ),
 
-        if ($pageName === Crud::PAGE_DETAIL) {
-            yield  $imageFileAvatar->onlyWhenCreating();
-        } else {
-            yield  $imageFileAvatar;
-        }
+        ];
+
+        $password = TextField::new('password')
+            ->setFormType(RepeatedType::class)
+            ->setFormTypeOptions([
+                'type' => PasswordType::class,
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => '(Repeat)'],
+                'mapped' => false,
+            ])
+            ->setRequired($pageName === Crud::PAGE_NEW)
+            ->onlyOnForms();
+        $fields[] = $password;
+
+        return $fields;
     }
 
     public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface

@@ -18,7 +18,7 @@ class DocumentController extends AbstractController
     public function index(DocumentRepository $documentRepository): Response
     {
         return $this->render('document/index.html.twig', [
-            'documents' => $documentRepository->findAll(),
+            'documents' => $documentRepository->findBy(['isPublished' => true], ['id' => 'DESC']),
         ]);
     }
 
@@ -26,10 +26,10 @@ class DocumentController extends AbstractController
     #[Route('/{id}', name: 'app_document_show', methods: ['GET'])]
     public function show(Document $document): Response
     {
+        dump($document);
+
         return $this->render('document/show.html.twig', [
             'document' => $document,
         ]);
     }
-
-
 }
