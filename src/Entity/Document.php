@@ -52,25 +52,41 @@ class Document
     #[ORM\OneToMany(targetEntity: Upload::class, mappedBy: 'document')]
     private Collection $uploads;
 
-   
- // NOTE: This is not a mapped field of entity metadata, just a simple property.
- #[Vich\UploadableField(mapping: 'document', fileNameProperty: 'fileNameDocument', size: 'fileSizeDocument', mimeType: 'fileMimeTypeDocument')]
-                    private ?File $imageNameDocument = null;
 
- #[ORM\Column(nullable: true)]
-                   private ?string $FileNameDocument = null;
+    // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'document', fileNameProperty: 'fileNameDocument', size: 'fileSizeDocument', mimeType: 'fileMimeTypeDocument')]
+    private ?File $imageNameDocument = null;
 
- #[ORM\Column(nullable: true)]
-                   private ?int $fileSizeDocument = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $FileNameDocument = null;
 
- #[ORM\Column(length:50, nullable: true)]
-                   private ?string $fileMimeTypeDocument = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $fileSizeDocument = null;
 
- #[ORM\Column(nullable: true)]
-                   private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $fileMimeTypeDocument = null;
 
- #[ORM\Column(nullable: true)]
-                   private ?\DateTimeImmutable $publishAt = null;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $publishAt = null;
+
+    // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'pagegarde', fileNameProperty: 'fileNameImageDocument', size: 'fileNameSizeImageDocument', mimeType: 'fileNameMimeTypeImageDocument')]
+    private ?File $imageDocument = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $fileNameImageDocument = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $fileNameSizeImageDocument = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $fileNameMimeTypeImageDocument = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $imageDocumentCreatedAt = null;
 
     /**
      * @var Collection<int, Favori>
@@ -83,7 +99,7 @@ class Document
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'documents')]
     private Collection $comments;
-   
+
     public function __construct()
     {
         $this->downloads = new ArrayCollection();
@@ -163,7 +179,7 @@ class Document
         return $this;
     }
 
- 
+
 
     /**
      * @return Collection<int, Download>
@@ -278,84 +294,84 @@ class Document
 
         return $this;
     }
-  
-
- /**
-  * Get the value of imageNameDocument
-  */ 
- public function getImageNameDocument()
-                {
-                   return $this->imageNameDocument;
-                }
- /**
-  * Set the value of imageNameDocument
-  *
-  * @return  self
-  */ 
- public function setImageNameDocument($imageNameDocument)
-                {
-                 $this->imageNameDocument = $imageNameDocument;
-                 return $this;
-                }
 
 
- /**
-  * Get the value of fileMimeTypeDocument
-  */ 
-  public function getFileMimeTypeDocument()
-  {
-      return $this->fileMimeTypeDocument;
+    /**
+     * Get the value of imageNameDocument
+     */
+    public function getImageNameDocument()
+    {
+        return $this->imageNameDocument;
     }
-    
- /**
-  * Set the value of fileMimeTypeDocument
-  *
-  * @return  self
-  */ 
- public function setFileMimeTypeDocument($fileMimeTypeDocument)
-                {
-                    $this->fileMimeTypeDocument = $fileMimeTypeDocument;
-                   return $this;
-                }
+    /**
+     * Set the value of imageNameDocument 
+     *
+     * @return  self
+     */
+    public function setImageNameDocument($imageNameDocument)
+    {
+        $this->imageNameDocument = $imageNameDocument;
+        return $this;
+    }
 
 
- /**
-  * Get the value of fileSizeDocument
-  */ 
- public function getFileSizeDocument()
-                {
-                    return $this->fileSizeDocument;
-                }
+    /**
+     * Get the value of fileMimeTypeDocument
+     */
+    public function getFileMimeTypeDocument()
+    {
+        return $this->fileMimeTypeDocument;
+    }
 
- /**
-  * Set the value of fileSizeDocument
-  *
-  * @return  self
-  */ 
- public function setFileSizeDocument($fileSizeDocument)
-                {
-                   $this->fileSizeDocument = $fileSizeDocument;
-                    return $this;
-                }
+    /**
+     * Set the value of fileMimeTypeDocument
+     *
+     * @return  self
+     */
+    public function setFileMimeTypeDocument($fileMimeTypeDocument)
+    {
+        $this->fileMimeTypeDocument = $fileMimeTypeDocument;
+        return $this;
+    }
 
 
- /**
-  * Get the value of FileNameDocument
-  */ 
- public function getFileNameDocument()
-                {
-                   return $this->FileNameDocument;
-                }
- /**
-  * Set the value of FileNameDocument
-  *
-  * @return  self
-  */ 
- public function setFileNameDocument($FileNameDocument)
-                {
-                   $this->FileNameDocument = $FileNameDocument;
-                   return $this;
-                }
+    /**
+     * Get the value of fileSizeDocument
+     */
+    public function getFileSizeDocument()
+    {
+        return $this->fileSizeDocument;
+    }
+
+    /**
+     * Set the value of fileSizeDocument
+     *
+     * @return  self
+     */
+    public function setFileSizeDocument($fileSizeDocument)
+    {
+        $this->fileSizeDocument = $fileSizeDocument;
+        return $this;
+    }
+
+
+    /**
+     * Get the value of FileNameDocument
+     */
+    public function getFileNameDocument()
+    {
+        return $this->FileNameDocument;
+    }
+    /**
+     * Set the value of FileNameDocument
+     *
+     * @return  self
+     */
+    public function setFileNameDocument($FileNameDocument)
+    {
+        $this->FileNameDocument = $FileNameDocument;
+        return $this;
+    }
 
 
     /**
@@ -414,6 +430,106 @@ class Document
                 $comment->setDocuments(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imageDocument
+     */
+    public function getImageDocument()
+    {
+        return $this->imageDocument;
+    }
+
+    /**
+     * Set the value of imageDocument
+     *
+     * @return  self
+     */
+    public function setImageDocument($imageDocument)
+    {
+        $this->imageDocument = $imageDocument;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fileNameImageDocument
+     */
+    public function getFileNameImageDocument()
+    {
+        return $this->fileNameImageDocument;
+    }
+
+    /**
+     * Set the value of fileNameImageDocument
+     *
+     * @return  self
+     */
+    public function setFileNameImageDocument($fileNameImageDocument)
+    {
+        $this->fileNameImageDocument = $fileNameImageDocument;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fileNameSizeImageDocument
+     */
+    public function getFileNameSizeImageDocument()
+    {
+        return $this->fileNameSizeImageDocument;
+    }
+
+    /**
+     * Set the value of fileNameSizeImageDocument
+     *
+     * @return  self
+     */
+    public function setFileNameSizeImageDocument($fileNameSizeImageDocument)
+    {
+        $this->fileNameSizeImageDocument = $fileNameSizeImageDocument;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fileNameMimeTypeImageDocument
+     */
+    public function getFileNameMimeTypeImageDocument()
+    {
+        return $this->fileNameMimeTypeImageDocument;
+    }
+
+    /**
+     * Set the value of fileNameMimeTypeImageDocument
+     *
+     * @return  self
+     */
+    public function setFileNameMimeTypeImageDocument($fileNameMimeTypeImageDocument)
+    {
+        $this->fileNameMimeTypeImageDocument = $fileNameMimeTypeImageDocument;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imageDocumentCreatedAt
+     */
+    public function getImageDocumentCreatedAt()
+    {
+        return $this->imageDocumentCreatedAt;
+    }
+
+    /**
+     * Set the value of imageDocumentCreatedAt
+     *
+     * @return  self
+     */
+    public function setImageDocumentCreatedAt($imageDocumentCreatedAt)
+    {
+        $this->imageDocumentCreatedAt = $imageDocumentCreatedAt;
 
         return $this;
     }

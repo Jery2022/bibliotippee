@@ -112,7 +112,7 @@ class UserCrudController extends AbstractCrudController
 
             TextareaField::new('imageFileAvatar', 'Selectionner votre Avatar')
                 ->hideOnIndex()
-                ->onlyWhenCreating()
+                //    ->onlyWhenCreating()
                 ->setFormType(
                     VichImageType::class,
                     [

@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Document;
-use App\Form\DocumentType;
 use App\Repository\DocumentRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -17,8 +14,12 @@ class DocumentController extends AbstractController
     #[Route('/', name: 'app_document_index', methods: ['GET'])]
     public function index(DocumentRepository $documentRepository): Response
     {
+        $allDocuments = $documentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC']);
+        $websiteName = 'BiblioTIPPEE';
+
         return $this->render('document/index.html.twig', [
-            'documents' => $documentRepository->findBy(['isPublished' => true], ['id' => 'DESC']),
+            'websiteName' => $websiteName,
+            'documents' => $allDocuments,
         ]);
     }
 

@@ -1,25 +1,82 @@
-<header class="py-3 mb-4 border-bottom">
-                <div class="container d-flex flex-wrap justify-content-center">
-                    <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
-                        <img src="{{ asset('build/images/logo/Logo-cntippee100.jpg') }}" alt="logo bibliotippee" width="50" height="50" class="me-2" />
-                        <span class="fs-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">BiblioTIPPEE</font></font></span>
-                    </a>
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 my-2" role="search">
-                        <input type="search" class="form-control" placeholder="Recherche..." aria-label="Recherche">
-                    </form>
-                    <div class="text-end">
-                        <button type="button" class="btn btn-outline-primary me-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Se connecter</font></font></button>
-                        <button type="button" class="btn btn-primary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">S'inscrire</font></font></button>
-                    </div>
-                </div>
-        </header>
-        <nav class="py-2 bg-body-tertiary border-bottom">
-                <div class="container d-flex flex-wrap">
-                    <ul class="nav me-auto">
-                        <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><i class="bi bi-chevron-right"></i> Accueil</font></font></a></li>
-                        <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><i class="bi bi-chevron-right"></i> Catalogue</font></font></a></li>
-                        <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><i class="bi bi-chevron-right"></i> Section thématique</font></font></a></li>
-                        <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><i class="bi bi-chevron-right"></i>Contactez-nous</font></font></a></li>
-                    </ul>
-                </div>
-        </nav>
+<header class="m-2 py-3 bg-white border-bottom">
+	<div class="container-fluid d-flex flex-wrap justify-content-center">
+		<a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto
+				        link-body-emphasis text-decoration-none">
+			<img src="{{ asset('build/images/logo/Logo-cntippee100.jpg') }}" alt="logo bibliotippee" 
+                                width="50" height="50" class="me-2"/>
+			<span class="fs-4">
+				<font style="vertical-align: inherit;">
+					<font style="vertical-align: inherit;">BiblioTIPPEE</font>
+				</font>
+			</span>
+		</a>
+		<form class="col-12 col-lg-auto mb-3 mb-lg-0 my-0 m-3" role="search">
+			<input type="search" class="form-control" placeholder="Je recherche un document..." aria-label="Recherche">
+		</form>
+		<div class="text-end">
+			<button type="button" class="btn btn-outline-success me-2">
+				<font style="vertical-align: inherit;">
+					<font style="vertical-align: inherit;">Se connecter</font>
+				</font>
+			</button>
+			<button type="button" class="btn btn-success">
+				<font style="vertical-align: inherit;">
+					<font style="vertical-align: inherit;">S'inscrire</font>
+				</font>
+			</button>
+		</div>
+	</div>
+</header>
+<nav class="m-3 py-3 border-bottom sticky-top">
+	<div class="container d-flex justify-content-center">
+		<ul class="nav me-auto">
+			<li class="nav-item">
+				<a href="{{path('app_home')}}" class="nav-link link-body-emphasis px-2">
+					<font style="vertical-align: inherit;">
+						<font style="vertical-align: inherit;">
+                                                        <i class="bi bi-chevron-right">
+                                                                Accueil
+                                                        </i>
+                                                </font>
+					</font>
+				</a>
+			</li>
+			<li class="nav-item">
+                                <a href="{{ path('app_document') }}" 
+                                        class="nav-link link-body-emphasis px-2">
+                                        <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">
+                                                        <i class="bi bi-chevron-right">
+                                                                Catalogue
+                                                        </i>
+                                                </font>
+                                        </font>
+                                </a>
+                        </li>
+			<li class="nav-item">
+                                <a href="{{ path('app_thematique') }}" 
+                                        class="nav-link link-body-emphasis px-2">
+                                        <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">
+                                                        <i class="bi bi-chevron-right">
+                                                                Section thématique
+                                                        </i> 
+                                                </font>
+                                        </font>
+                                </a>
+                        </li>
+			<li class="nav-item">
+                                <a href="{{ path('app_contact') }}" 
+                                        class="nav-link link-body-emphasis px-2">
+                                        <font style="vertical-align: inherit;">
+                                                <font style="vertical-align: inherit;">
+                                                        <i class="bi bi-chevron-right">
+                                                                Contactez-nous 
+                                                        </i> 
+                                                </font>
+                                        </font>
+                                </a>
+                        </li>
+		</ul>
+	</div>
+</nav>

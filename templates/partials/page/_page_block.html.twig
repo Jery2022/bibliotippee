@@ -1,0 +1,60 @@
+
+{% block body %}
+    <div class="container-fluid px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    
+        {% for document in documents %}
+                <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Download badge-->
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Download</div>
+                            <!-- favori badge-->
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; left: 0.5rem">Favorite</div>
+                            <!-- Product image-->
+                            <img class="card-img-top" src="{{ vich_uploader_asset(document, 'imageNameDocument') }}" alt="Affiche {{ document.title }}"  />
+                            <!-- document details--> 
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Document name-->
+                                    <h5 class="fw-bolder">Titre : {{ document.title }}</h5>
+                                    <!-- Document author-->
+                                    <h7 class="fw-bolder">Auteur : {{ document.author }}</h5>
+                                    <!-- Document reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="bi-star-fill">*</div>
+                                        <div class="bi-star-fill">*</div>
+                                        <div class="bi-star-fill">*</div>
+                                        <div class="bi-star-fill">*</div>
+                                        <div class="bi-star-fill">*</div>
+                                    </div>
+                                    <!-- Document description -->
+                                    <div>{{ document.description }}</div>
+                                    <!-- Document dates -->
+                              {#}      <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <div class="dateformat">Crée le {{ document.createdAt ? document.createdAt|date('d-m-Y') : 'Indefine' }}</div>
+                                        <div class="dateformat">Publié le {{ document.publishAt ? document.publishAt|date('Y-m-d H:i:s') : 'Indefine' }}</div>
+                                    </div> #}
+                                </div>
+                            </div>
+                            <!-- Document actions-->
+                            <div class="row card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <a class="btn btn-outline-success mt-auto" 
+                                        href="{{ path('app_document_show', {'id': document.id}) }}">En savoir plus</a>
+                                </div>
+                                <div class="text-center">
+                                    <a class="btn btn-outline-success mt-auto" 
+                                        href="{{ path('app_document_show', {'id': document.id}) }}">Lire</a>
+                                </div>
+                                <div class="text-center">
+                                    <a class="btn btn-outline-success mt-auto" 
+                                        href="{{ path('app_document_show', {'id': document.id}) }}">Télécharger</a>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        {% else %}
+                <div class="text-center bg-warning">Désolé aucun document trouvé !</div>
+        {% endfor %}
+        </div>
+{% endblock %}

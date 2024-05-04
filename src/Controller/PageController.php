@@ -2,27 +2,41 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\DocumentRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PageController extends AbstractController
 {
-    #[Route('/', name: 'app_page')]
-    public function index(): Response
+    #[Route('/', name: 'app_home')]
+    public function index(DocumentRepository $documentRepository, ParameterBagInterface $parameterBagInterface): Response
     {
+        $documents_limit = $parameterBagInterface->get('documents_limit');
+
+        $documents = $documentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC'], $documents_limit);
+
         $websiteName = 'BiblioTIPPEE';
+
         return $this->render('page/index.html.twig', [
             'websiteName' => $websiteName,
+            'documents' => $documents,
+
         ]);
     }
 
-    #[Route('/catalogue', name: 'app_catalogue')]
-    public function catalogue(): Response
+    #[Route('/document', name: 'app_document')]
+    public function document(DocumentRepository $allDocumentRepository): Response
     {
+
+        $allDocuments = $allDocumentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC']);
+
         $websiteName = 'BiblioTIPPEE';
-        return $this->render('catalogue/index.html.twig', [
+
+        return $this->render('document/index.html.twig', [
             'websiteName' => $websiteName,
+            'allDocuments' => $allDocuments,
         ]);
     }
 
