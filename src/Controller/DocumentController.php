@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/document')]
+//#[Route('/document')]
 class DocumentController extends AbstractController
 {
     #[Route('/', name: 'app_document_index', methods: ['GET'])]
@@ -27,7 +27,7 @@ class DocumentController extends AbstractController
     #[Route('/{id}', name: 'app_document_show', methods: ['GET'])]
     public function show(Document $document): Response
     {
-        dump($document);
+        // dump($document);
 
         return $this->render('document/show.html.twig', [
             'document' => $document,

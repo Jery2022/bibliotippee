@@ -13,15 +13,15 @@ class PageController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(DocumentRepository $documentRepository, ParameterBagInterface $parameterBagInterface): Response
     {
-        $documents_limit = $parameterBagInterface->get('documents_limit');
+        $limit = $parameterBagInterface->get('documents_limit');
 
-        $documents = $documentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC'], $documents_limit);
+        $documents = $documentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC'], $limit);
 
         $websiteName = 'BiblioTIPPEE';
 
         return $this->render('page/index.html.twig', [
             'websiteName' => $websiteName,
-            'documents' => $documents,
+            'documents' => $documents, 
 
         ]);
     }
@@ -30,13 +30,13 @@ class PageController extends AbstractController
     public function document(DocumentRepository $allDocumentRepository): Response
     {
 
-        $allDocuments = $allDocumentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC']);
+        $documents = $allDocumentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC']);
 
         $websiteName = 'BiblioTIPPEE';
 
         return $this->render('document/index.html.twig', [
             'websiteName' => $websiteName,
-            'allDocuments' => $allDocuments,
+            'documents' => $documents,
         ]);
     }
 
