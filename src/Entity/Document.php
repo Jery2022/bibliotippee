@@ -73,7 +73,7 @@ class Document
     private ?\DateTimeImmutable $publishAt = null;
 
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
-    #[Vich\UploadableField(mapping: 'pagegarde', fileNameProperty: 'fileNameImageDocument', size: 'fileNameSizeImageDocument', mimeType: 'fileNameMimeTypeImageDocument')]
+    #[Vich\UploadableField(mapping: 'imagedocument', fileNameProperty: 'fileNameImageDocument', size: 'fileNameSizeImageDocument', mimeType: 'fileNameMimeTypeImageDocument')]
     private ?File $imageDocument = null;
 
     #[ORM\Column(nullable: true)]

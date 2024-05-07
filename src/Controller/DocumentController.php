@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-//#[Route('/document')]
+#[Route('/document')]
 class DocumentController extends AbstractController
 {
     #[Route('/', name: 'app_document_index', methods: ['GET'])]

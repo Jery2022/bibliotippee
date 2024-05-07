@@ -9,9 +9,9 @@ vich_uploader:
       uri_prefix: uploads/documents
       upload_destination: '%kernel.project_dir%/public/uploads/documents'
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-    pagegarde:
-      uri_prefix: uploads/pagegardes
-      upload_destination: '%kernel.project_dir%/public/uploads/pagegardes'
+    imagedocument:
+      uri_prefix: images/pagegardes
+      upload_destination: '%kernel.project_dir%/public/images/pagegardes'
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
     avatar:
       uri_prefix: /images/avatars
