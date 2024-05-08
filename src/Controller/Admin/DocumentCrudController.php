@@ -45,7 +45,7 @@ class DocumentCrudController extends AbstractCrudController
     {
         $mappingParameter = $this->getParameter('vich_uploader.mappings');
         // $documentMapping = $mappingParameter['document']['uri_prefix'];
-        $pagegardeMapping = $mappingParameter['pagegarde']['uri_prefix'];
+        $pagegardeMapping = $mappingParameter['imagedocument']['uri_prefix'];
 
         yield IdField::new('id')->hideOnForm();
         yield TextField::new('title', 'Saisir le titre du document :')->setLabel('Titre');
