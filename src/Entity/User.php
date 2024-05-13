@@ -2,22 +2,46 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[Vich\Uploadable]
-class User
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 180)]
+    private ?string $email = null;
+
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
@@ -26,16 +50,7 @@ class User
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $pseudo = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $urlAvatar = null;
-
-    #[ORM\Column]
-    private array $roles = [];
 
     /**
      * @var Collection<int, Favori>
@@ -67,8 +82,22 @@ class User
     #[ORM\OneToMany(targetEntity: Download::class, mappedBy: 'users')]
     private Collection $download;
 
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
+    // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'avatar', fileNameProperty: 'imageNameAvatar', size: 'imageSizeAvatar')]
+    private ?File $imageFileAvatar = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $imageNameAvatar = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $imageSizeAvatar = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedImageAvatarAt = null;
+
+    #[ORM\Column]
+    private bool $isVerified = false;
+
 
     public function __construct()
     {
@@ -81,12 +110,83 @@ class User
 
     public function __toString(): string
     {
-        return $this->getPseudo();
+        return $this->getId();
     }
+
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getLastName(): ?string
@@ -125,17 +225,6 @@ class User
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
 
     public function getUrlAvatar(): ?string
     {
@@ -145,30 +234,6 @@ class User
     public function setUrlAvatar(?string $urlAvatar): static
     {
         $this->urlAvatar = $urlAvatar;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     *
-     * @return list<string>
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
 
         return $this;
     }
@@ -324,34 +389,11 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): static
-    {
-        $this->password = $password;
-
-        return $this;
-    }
 
     public function getFullName()
     {
         return $this->getFirstName() . ' ' . $this->getLastName();
     }
-    // NOTE: This is not a mapped field of entity metadata, just a simple property.
-    #[Vich\UploadableField(mapping: 'avatar', fileNameProperty: 'imageNameAvatar', size: 'imageSizeAvatar')]
-    private ?File $imageFileAvatar = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?string $imageNameAvatar = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $imageSizeAvatar = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedImageAvatarAt = null;
 
     public function setImageFileAvatar(?File $imageFileAvatar = null): void
     {
@@ -389,13 +431,15 @@ class User
         return $this->imageSizeAvatar;
     }
 
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
+    public function isVerified(): bool
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        return $this->isVerified;
+    }
+
+    public function setVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
     }
 }

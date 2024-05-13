@@ -11,8 +11,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DocumentType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
+    public function buildForm(
+        FormBuilderInterface $builder,
+        array $options
+    ): void {
         $builder
             ->add('title')
             ->add('author')
@@ -30,8 +32,7 @@ class DocumentType extends AbstractType
             ->add('users', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'id',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

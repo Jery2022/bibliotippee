@@ -1,7 +1,8 @@
 
 {% block body %}
     <div class="container-fluid px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 
+                row-cols-xl-4 justify-content-center">
     
         {% for document in documents %}
                 <div class="col mb-5">
@@ -42,10 +43,10 @@
                             <!-- Document actions-->
                             <div class="row card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-success mt-auto" 
-                                    href="{{ path('app_document_show', {'id': document.id}) }}">En savoir plus</a>
+                                    href="{{ path('app_document_show', {'id': document.id}) }}">Voir la fiche</a>
                                 </div>
                                 <div class="text-center"><a class="btn btn-outline-success mt-auto" 
-                                    href="{{ path('app_document_show', {'id': document.id}) }}">Lire</a>
+                                    href="{{ path('app_document_show', {'id': document.id}) }}">Lire </a>
                                 </div>
                                 <div class="text-center"><a class="btn btn-outline-success mt-auto" 
                                     href="{{ path('app_document_show', {'id': document.id}) }}">Télécharger</a>

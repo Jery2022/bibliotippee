@@ -111,7 +111,7 @@ class Document
 
     public function __toString(): string
     {
-        return $this->getID();
+        return $this->getId();
     }
 
     public function getId(): ?int

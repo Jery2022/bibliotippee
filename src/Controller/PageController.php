@@ -22,7 +22,6 @@ class PageController extends AbstractController
         return $this->render('page/index.html.twig', [
             'websiteName' => $websiteName,
             'documents' => $documents,
-
         ]);
     }
 

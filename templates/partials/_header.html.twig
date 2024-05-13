@@ -14,16 +14,21 @@
 			<input type="search" class="form-control" placeholder="Je recherche un document..." aria-label="Recherche">
 		</form>
 		<div class="text-end">
-			<button type="button" class="btn btn-outline-success me-2">
+			<a href="{{ path('app_login') }}" class="btn btn-outline-success me-2">
 				<font style="vertical-align: inherit;">
-					<font style="vertical-align: inherit;">Se connecter</font>
+					<font style="vertical-align: inherit;">S'Identifier</font>
 				</font>
-			</button>
-			<button type="button" class="btn btn-success">
+			</a>
+			<a href="{{ path('app_register') }}" class="btn btn-success me-2">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">S'inscrire</font>
 				</font>
-			</button>
+			</a>
+			<a href="{{ path('app_logout') }}" class="btn btn-danger me-2">
+				<font style="vertical-align: inherit;">
+					<font style="vertical-align: inherit;">Se déconnecter</font>
+				</font>
+			</a>
 		</div>
 	</div>
 </header>
