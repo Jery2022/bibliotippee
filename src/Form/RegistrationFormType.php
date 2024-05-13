@@ -17,6 +17,28 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add(
+                'firstName',
+                null,
+                [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Renseigner votre prénom !',
+                        ]),
+                    ],
+                ]
+            )
+            ->add(
+                'lastName',
+                null,
+                [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Renseigner votre nom !',
+                        ]),
+                    ],
+                ]
+            )
             ->add('email')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -33,17 +55,16 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Renseigner votre mot de passe !',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit avoir au moins {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

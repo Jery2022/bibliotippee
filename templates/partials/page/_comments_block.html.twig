@@ -3,10 +3,12 @@
     <div class="container-fluid px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
     
-        {% for document in documents %}
+        {% for comment in comments %}
                 <div class="col mb-5">
                         <div class="card h-100">
-                            <img class="card-img-top" src="{{ vich_uploader_asset(document, 'imageNameDocument') }}" alt="Affiche {{ document.title }}"  />
+                            <img class="card-img-top" 
+                                src="{{ vich_uploader_asset(user, 'imageNameDocument') }}" 
+                                alt="Affiche {{ document.title }}"  />
                             <!-- comment elements--> 
                             <div class="card-body p-4">
                                 <div class="text-center">
