@@ -14,7 +14,7 @@
 			<input type="search" class="form-control" placeholder="Je recherche un document..." aria-label="Recherche">
 		</form>
 		<div class="text-end">
-		{% if is_granted('IS_AUTHENTICATED') %}
+		{% if app.user %}
 			<a href="{{ path('app_logout') }}" class="btn btn-danger me-2">
 				<font style="vertical-align: inherit;">
 					<font style="vertical-align: inherit;">Se déconnecter</font>
