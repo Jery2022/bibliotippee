@@ -1,4 +1,4 @@
-<header class="m-2 py-3 bg-white border-bottom">
+<header class="m-2 py-3 bg-white border-bottom border-left">
 	<div class="container-fluid d-flex flex-wrap justify-content-center">
 		<a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto
 				        link-body-emphasis text-decoration-none">
@@ -35,56 +35,59 @@
 		</div>
 	</div>
 </header>
-<nav class="m-3 py-3 border-bottom sticky-top">
-	<div class="container d-flex justify-content-center">
+<nav class="m-2 py-3 border-bottom border-left sticky-top
+	 		d-flex justify-content-center
+	 		bg-success
+			">
+	<div>
 		<ul class="nav me-auto">
-			<li class="nav-item">
+			<li class="nav-item ">
 				<a href="{{path('app_home')}}" class="nav-link link-body-emphasis px-2">
 					<font style="vertical-align: inherit;">
 						<font style="vertical-align: inherit;">
-                                                        <i class="bi bi-chevron-right">
-                                                                Accueil
-                                                        </i>
-                                                </font>
+                        <i class="bi bi-chevron-right">
+                                Accueil
+                        </i>
+                  </font>
 					</font>
 				</a>
 			</li>
 			<li class="nav-item">
-                                <a href="{{ path('app_document') }}" 
-                                        class="nav-link link-body-emphasis px-2">
-                                        <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">
-                                                        <i class="bi bi-chevron-right">
-                                                                Catalogue
-                                                        </i>
-                                                </font>
-                                        </font>
-                                </a>
-                        </li>
+            <a href="{{ path('app_document') }}" 
+                   class="nav-link link-body-emphasis px-2">
+                    <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                                    <i class="bi bi-chevron-right">
+                                          Catalogue de Documents
+                                    </i>
+                              </font>
+                      </font>
+               </a>
+         </li>
 			<li class="nav-item">
-                                <a href="{{ path('app_thematique') }}" 
-                                        class="nav-link link-body-emphasis px-2">
-                                        <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">
-                                                        <i class="bi bi-chevron-right">
-                                                                Section thématique
-                                                        </i> 
-                                                </font>
-                                        </font>
-                                </a>
-                        </li>
+         	  <a href="{{ path('app_thematique') }}" 
+         	          class="nav-link link-body-emphasis px-2">
+         	          <font style="vertical-align: inherit;">
+         	                  <font style="vertical-align: inherit;">
+         	                          <i class="bi bi-chevron-right">
+         	                                  Section thématique
+         	                          </i> 
+         	                  </font>
+         	          </font>
+         	  </a>
+            </li>
 			<li class="nav-item">
-                                <a href="{{ path('app_contact') }}" 
-                                        class="nav-link link-body-emphasis px-2">
-                                        <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">
-                                                        <i class="bi bi-chevron-right">
-                                                                Contactez-nous 
-                                                        </i> 
-                                                </font>
-                                        </font>
-                                </a>
-                        </li>
+              <a href="{{ path('app_contact') }}" 
+                      class="nav-link link-body-emphasis px-2">
+                      <font style="vertical-align: inherit;">
+                              <font style="vertical-align: inherit;">
+                                      <i class="bi bi-chevron-right">
+                                              Contactez-nous 
+                                      </i> 
+                              </font>
+                      </font>
+              </a>
+         </li>
 		</ul>
 	</div>
 </nav>

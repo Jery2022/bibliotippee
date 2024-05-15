@@ -100,6 +100,10 @@ class Document
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'documents')]
     private Collection $comments;
 
+    #[ORM\ManyToOne(inversedBy: 'documents')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     public function __construct()
     {
         $this->downloads = new ArrayCollection();
@@ -530,6 +534,18 @@ class Document
     public function setImageDocumentCreatedAt($imageDocumentCreatedAt)
     {
         $this->imageDocumentCreatedAt = $imageDocumentCreatedAt;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

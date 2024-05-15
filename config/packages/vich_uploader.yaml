@@ -6,11 +6,11 @@ vich_uploader:
 
   mappings:
     document:
-      uri_prefix: uploads/documents
+      uri_prefix: /uploads/documents
       upload_destination: '%kernel.project_dir%/public/uploads/documents'
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
     imagedocument:
-      uri_prefix: images/pagegardes
+      uri_prefix: /images/pagegardes
       upload_destination: '%kernel.project_dir%/public/images/pagegardes'
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
     avatar:

@@ -18,6 +18,17 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add(
+                'pseudo',
+                null,
+                [
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Renseigner votre pseudo !',
+                        ]),
+                    ],
+                ]
+            )
+            ->add(
                 'firstName',
                 null,
                 [
@@ -44,7 +55,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter nos conditions générales d\'utilisation.',
                     ]),
                 ],
             ])

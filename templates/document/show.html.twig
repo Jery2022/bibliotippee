@@ -9,31 +9,31 @@
 {% block body %}
 
 <p class = "display-5 text-center fw-bold 
-        text-body-emphis mt-5 mb-5">Détails du document : {{document.title}}
+        text-body-emphis mt-5 mb-5">{{document.title}}
 </p>
-<div class="card mb-3">
-    <div class="row g-1">
-            <div class="card col-md-3">
+<div class="mb-3">
+    <div class="row p-2 g-2 d-flex flex-wrap bg-white border">
+            <div class=" col-md-3">
                 {% if document.fileNameImageDocument  %}
-                    <img src="{{ vich_uploader_asset(user, 'imageFileAvatar') }}"  
+                    <img src="{{ vich_uploader_asset(document, 'imageDocument') }}"  
                         class="img-fluid rounded-start" 
                         alt="affiche {{ document.title }}" 
-                        
-                        />
+                    />
                 
                 {% else %}
-                    <img src="{{ asset('build/images/image-default.png')}}" 
+                    <img src="{{ asset('build/images/default/image-default.png')}}" 
                         class="img-fluid rounded-start" alt="affiche {{document.title}}"/>
                 {% endif %}
             </div>
-            <div class="card col-md-5">
+            <div class=" col-md-5">
                 <div class="card-body">
                     <h5 class="card-title">Auteur : {{ document.author }}</h5>
                     <p class="card-text">Description :</p>
                     <p class="card-text">{{ document.description|raw }}</p>
                     <p class="card-text"><small 
-                        class="text-body-secondary">Publié le : {{ document.publishAt ? document.publishAt|date('d-m-Y') : ' ' }} - 
-                        Archivé le : {{ document.publishAt ? document.createdAt|date('d-m-Y') : ' ' }}
+                        class="text-body-secondary">
+                        Archivé le : {{ document.publishAt ? document.createdAt|date('d-m-Y') : ' ' }} - 
+                        Publié le : {{ document.publishAt ? document.publishAt|date('d-m-Y') : ' ' }}  
                     </small></p>
                     <div >
                         <span class="card-text"><small 
@@ -44,23 +44,25 @@
                                 <label="avgstar{{ i }}" title="{{i}} étoiles">{{i}} étoiles</label>
                             {% endfor %}
                         {% else %}
-                            <span><small 
-                        class="card-text">Il n'y a pas de note pour ce document. Soyez le premier à fournir une note !<small></span>
+                            <span 
+                            class="card-text">Il n'y a pas de note pour ce document. Soyez le premier à fournir une note !</span>
                         {% endif %}
                     </div>
                     <div class="d-flex justify-content-between mt-3">
                         <a href="# {#{ path('app_document_open', {'id': document.id}) } #} ">Lire</a>
-                        <a href=" #{#{ path('app_document_download', {'id': document.id}) }#} ">Télécharger</a>
+                        {% if app.user  %}
+                            <a href=" #{#{ path('app_document_download', {'id': document.id}) }#} ">Télécharger</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="card col-md-4">
-                    <h4 class="text-center mt-4">Laisser une note et un avis </h4>
-                    <div class=" m-3 px-3" > 
+            <div class="card col-md-4 bg-primary">
+                    <h4 class=" text-center mt-3 p-2">Laisser une note et un avis </h4>
+                    <div class="card m-3 p-3" > 
                             {% if user %}
                                 {% include "partials/comment/_form_comment.html.twig" %} 
                             {% else %}
-                                <p>Vous devez être connecté pour pouvoir laisser une note et un avis. Connectez-vous ?
+                                <p>Vous devez être connecté pour pouvoir télécharger, donner une note et laisser un avis. Connectez-vous ?
                                     <a href="{{path('app_login')}}">Je me connecte</a>
                                 </p> 
                             {% endif %}
@@ -78,7 +80,7 @@
             higth="100px"/>
 </div>
 #}
-<div class="row text-center mt-5">
+<div class="row text-center m-5">
     <a href="{{ path('app_document_index') }}">Retour à la liste</a>
 </div>
 {% endblock %}

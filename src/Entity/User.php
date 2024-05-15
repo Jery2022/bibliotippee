@@ -2,22 +2,23 @@
 
 namespace App\Entity;
 
-
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
-use Doctrine\Common\Collections\ArrayCollection;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Ignore;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+//#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[Vich\Uploadable]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['pseudo'], message: 'There is already an account with this pseudo')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -48,9 +49,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $urlAvatar = null;
 
     /**
      * @var Collection<int, Favori>
@@ -84,6 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
     #[Vich\UploadableField(mapping: 'avatar', fileNameProperty: 'imageNameAvatar', size: 'imageSizeAvatar')]
+    #[Ignore()]
     private ?File $imageFileAvatar = null;
 
     #[ORM\Column(nullable: true)]
@@ -98,7 +97,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
-
     public function __construct()
     {
         $this->favori = new ArrayCollection();
@@ -108,11 +106,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->download = new ArrayCollection();
     }
 
-    public function __toString(): string
+    public function __toString() : string
     {
         return $this->getId();
     }
-
 
     public function getId(): ?int
     {
@@ -224,20 +221,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-
-    public function getUrlAvatar(): ?string
-    {
-        return $this->urlAvatar;
-    }
-
-    public function setUrlAvatar(?string $urlAvatar): static
-    {
-        $this->urlAvatar = $urlAvatar;
-
-        return $this;
-    }
-
 
     /**
      * @return Collection<int, Favori>
@@ -388,7 +371,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     public function getFullName()
     {

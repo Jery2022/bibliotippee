@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Category;
 use App\Entity\User;
 use App\Entity\Favori;
 use App\Entity\Search;
@@ -54,9 +55,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('__________________');
         yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-users', User::class);
         yield MenuItem::linkToCrud('Documents', 'fas fa-map-marker-alt', Document::class);
+        yield MenuItem::linkToCrud('Catégories', 'fas fa-map-marker-alt', Category::class);
         yield MenuItem::section('__________________')
             ->setPermission('ROLE_ADMIN', 'ROLE_SUPER_ADMIN');
-        yield MenuItem::linkToCrud('Téléchargement', 'fa-solid fa-circle-down', Download::class);
+        yield MenuItem::linkToCrud('Téléchargements', 'fa-solid fa-circle-down', Download::class);
         yield MenuItem::linkToCrud('Favoris', 'fa-solid fa-heart', Favori::class);
         yield MenuItem::linkToCrud('Recherches', 'fas fa-search', Search::class);
         yield MenuItem::linkToCrud('Commentaires', 'fas fa-comments', Comment::class);

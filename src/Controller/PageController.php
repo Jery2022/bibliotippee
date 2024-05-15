@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Repository\DocumentRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PageController extends AbstractController
 {
@@ -20,7 +20,10 @@ class PageController extends AbstractController
 
         $limit = $parameterBagInterface->get('documents_limit');
 
-        $documents = $documentRepository->findBy(['isPublished' => true], ['createdAt' => 'DESC'], $limit);
+        $documents = $documentRepository
+            ->findBy(
+                ['isPublished' => true],
+                ['createdAt' => 'DESC'], $limit);
 
         $isConnected = $security->isGranted('ROLE_USER');
 

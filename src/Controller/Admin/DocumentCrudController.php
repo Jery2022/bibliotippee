@@ -3,17 +3,17 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Document;
-use Vich\UploaderBundle\Entity\File;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Entity\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class DocumentCrudController extends AbstractCrudController
 {
@@ -40,23 +40,29 @@ class DocumentCrudController extends AbstractCrudController
             ->setPaginatorPageSize(10);
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         $mappingParameter = $this->getParameter('vich_uploader.mappings');
         // $documentMapping = $mappingParameter['document']['uri_prefix'];
         $pagegardeMapping = $mappingParameter['imagedocument']['uri_prefix'];
 
-        yield IdField::new('id')->hideOnForm();
-        yield TextField::new('title', 'Saisir le titre du document :')->setLabel('Titre');
-        yield TextField::new('author', 'Saisir le nom de l\'auteur :')->setLabel('Auteur');
-        yield TextareaField::new('description', 'Saisir la description du document :')->setLabel('Description');
+        yield IdField::new ('id')->hideOnForm();
+        yield TextField::new ('title', 'Saisir le titre du document :')->setLabel('Titre');
+        yield TextField::new ('author', 'Saisir le nom de l\'auteur :')->setLabel('Auteur');
+        yield TextareaField::new ('description', 'Saisir la description du document :')->setLabel('Description');
 
-        yield ImageField::new('fileNameImageDocument', 'Photo')
+        yield AssociationField::new ('category', 'Catégorie :')
+            ->setFormTypeOption('disabled', false)
+            ->setFormTypeOption('choice_label', 'intitule')
+            ->setFormTypeOption('query_builder', function ($category) {
+                return $category->createQueryBuilder('u')
+                    ->orderBy('u.intitule', 'ASC');
+            });
+        yield ImageField::new ('fileNameImageDocument', 'Photo')
             ->setBasePath($pagegardeMapping)
             ->hideOnForm();
 
-        yield TextareaField::new('imageNameDocument', 'Nom du fichier ')
+        yield TextareaField::new ('imageNameDocument', 'Nom du fichier ')
             ->hideOnIndex()
             ->setLabel('Charger un document (format pdf ou epub - taille max 5Mo) :')
             ->setFormType(
@@ -70,12 +76,12 @@ class DocumentCrudController extends AbstractCrudController
                                 'document/epub',
                             ],
                             'mimeTypesMessage' => 'Veuillez télécharger un document au format valide (pdf, epub) !',
-                        ],)
+                        ], ),
                     ],
                 ],
             );
 
-        yield TextareaField::new('imageDocument')
+        yield TextareaField::new ('imageDocument')
             ->hideOnIndex()
             ->setLabel('Charger l\'image de la page de garde (format jpg, png ou jpeg - taille max 2Mo) :')
             ->setFormType(
@@ -87,15 +93,15 @@ class DocumentCrudController extends AbstractCrudController
                             'mimeTypes' => [
                                 'document/jpg',
                                 'document/png',
-                                'document/jpeg'
+                                'document/jpeg',
                             ],
                             'mimeTypesMessage' => 'Veuillez télécharger une image valide (jpg, png, jpeg) !',
-                        ],)
+                        ], ),
                     ],
                 ],
             );
 
-        yield AssociationField::new('users', 'Nom employé :')
+        yield AssociationField::new ('users', 'Nom employé :')
             ->setFormTypeOption('disabled', false)
             ->setFormTypeOption('choice_label', 'fullName')
             ->setFormTypeOption('query_builder', function ($user) {
@@ -103,21 +109,20 @@ class DocumentCrudController extends AbstractCrudController
                     ->orderBy('u.firstName', 'ASC');
             });
 
-        $createdAt = DateTimeField::new('createdAt', 'Document date')
+        $createdAt = DateTimeField::new ('createdAt', 'Document date')
             ->setFormTypeOptions([
                 'years' => range(date('Y'), date('Y') + 5),
                 'widget' => 'single_text',
             ]);
 
-        $imageCreatedAt =  $createdAt;
+        $imageCreatedAt = $createdAt;
 
-        $publishAt = DateTimeField::new('publishAt', 'Date de publication')
+        $publishAt = DateTimeField::new ('publishAt', 'Date de publication')
             ->setFormTypeOptions([
                 'years' => range(date('Y'), date('Y') + 5),
                 'widget' => 'single_text',
             ])
             ->setLabel('Date de publication :');
-
 
         if (Crud::PAGE_EDIT === $pageName) {
             yield $createdAt->setFormTypeOption('disabled', true);
@@ -129,9 +134,7 @@ class DocumentCrudController extends AbstractCrudController
             yield $publishAt;
         }
 
-
-
-        $isPublished = BooleanField::new('isPublished', 'Status ')
+        $isPublished = BooleanField::new ('isPublished', 'Status ')
             ->setHelp('Veuillez cocher pour publier le document.')
             ->setLabel('Status :');
 
