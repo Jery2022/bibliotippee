@@ -52,7 +52,6 @@ class Document
     #[ORM\OneToMany(targetEntity: Upload::class, mappedBy: 'document')]
     private Collection $uploads;
 
-
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
     #[Vich\UploadableField(mapping: 'document', fileNameProperty: 'fileNameDocument', size: 'fileSizeDocument', mimeType: 'fileMimeTypeDocument')]
     private ?File $imageNameDocument = null;
@@ -69,11 +68,11 @@ class Document
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable : true)]
     private ?\DateTimeImmutable $publishAt = null;
 
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
-    #[Vich\UploadableField(mapping: 'imagedocument', fileNameProperty: 'fileNameImageDocument', size: 'fileNameSizeImageDocument', mimeType: 'fileNameMimeTypeImageDocument')]
+    #[Vich\UploadableField(mapping : 'imagedocument', fileNameProperty: 'fileNameImageDocument', size: 'fileNameSizeImageDocument', mimeType: 'fileNameMimeTypeImageDocument')]
     private ?File $imageDocument = null;
 
     #[ORM\Column(nullable: true)]
@@ -91,7 +90,7 @@ class Document
     /**
      * @var Collection<int, Favori>
      */
-    #[ORM\OneToMany(targetEntity: Favori::class, mappedBy: 'documents')]
+    #[ORM\OneToMany(targetEntity : Favori::class, mappedBy: 'documents')]
     private Collection $favoris;
 
     /**
@@ -115,7 +114,7 @@ class Document
 
     public function __toString(): string
     {
-        return $this->getId();
+        return $this->getTitle();
     }
 
     public function getId(): ?int
@@ -182,8 +181,6 @@ class Document
 
         return $this;
     }
-
-
 
     /**
      * @return Collection<int, Download>
@@ -299,7 +296,6 @@ class Document
         return $this;
     }
 
-
     /**
      * Get the value of imageNameDocument
      */
@@ -308,7 +304,7 @@ class Document
         return $this->imageNameDocument;
     }
     /**
-     * Set the value of imageNameDocument 
+     * Set the value of imageNameDocument
      *
      * @return  self
      */
@@ -317,7 +313,6 @@ class Document
         $this->imageNameDocument = $imageNameDocument;
         return $this;
     }
-
 
     /**
      * Get the value of fileMimeTypeDocument
@@ -338,7 +333,6 @@ class Document
         return $this;
     }
 
-
     /**
      * Get the value of fileSizeDocument
      */
@@ -358,7 +352,6 @@ class Document
         return $this;
     }
 
-
     /**
      * Get the value of FileNameDocument
      */
@@ -376,7 +369,6 @@ class Document
         $this->FileNameDocument = $FileNameDocument;
         return $this;
     }
-
 
     /**
      * @return Collection<int, Favori>
