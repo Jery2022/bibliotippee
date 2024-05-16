@@ -90,6 +90,6 @@ TO DO :
 
 ### Deployment
 
-Le site est déployé sur la plateforme Heroku. Mais, difficulté d'affichage de l'application (Erreur 404 : Forbiten) liée à Appache sur le serveur de production. Traitement du bug en cours.
+Le site est déployé sur la plateforme Heroku. Mais, difficulté d'affichage des images et du routing: error 404. Traitement du bug en cours.
 
 Enjoy You !
