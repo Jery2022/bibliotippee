@@ -81,13 +81,12 @@ https://devcenter.heroku.com/start
 TO DO :
 
 - Mise en conformité du design des interfaces par rapport aux différentes maquettes
-- Résolution du bug de la page d'authentification
-- Création de la page d'inscription
 - Correction et finalisation des Fixtures
-- Création de la page de contact et soumission
-- Finalisation de la soumission des commentaires sur une document numérique
 - Finalisation des filtres et recherche en front-end
-- Mise en place de la soumission du status favori
+- Mise en place de l'affichage en front du statut de favori d'un document 
+- Mise en place de l'affichage en front du nombre de téléchargements de chaque documen
+- Lecture et téléchargements d'un document.
+- Correction de bugs d'affichage des images en mode production ainsi le routage.
 
 ### Deployment
 
