@@ -26,18 +26,20 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-#/public/build/
+/public/build/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 ###> images & uploads ###
-#/public/images/*
-#/public/uploads/*
+/public/images/*
+/public/uploads/*
+/datas_Fixtures/*
 !public/images/.gitignore
 !public/uploads/.gitignore
 
 ###< images & uploads ###
 
-/poubelle/*
+###< autres dossiers ###
+/docs/
 !poubelle/.gitignore
