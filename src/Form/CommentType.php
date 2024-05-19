@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Comment;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -16,7 +15,7 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('rate', ChoiceType::class, [
-                'label' => 'Choisir une note :',
+                'label' => 'Votre note :',
                 'choices' => [
                     '5' => 5,
                     '4' => 4,
@@ -24,14 +23,14 @@ class CommentType extends AbstractType
                     '2' => 2,
                     '1' => 1,
                 ],
-                'attr'      =>   [
+                'attr' => [
                     'class' => 'rate',
                 ],
-                'expanded'  => true,
-                'multiple'  =>  false,
+                'expanded' => true,
+                'multiple' => false,
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Saisissez votre avis :'
+                'label' => 'Saisissez votre avis :',
             ]);
     }
 

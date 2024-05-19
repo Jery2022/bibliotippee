@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkbibliotippee=self.webpackChunkbibliotippee||[]).push([[524],{28:()=>{console.log("This log comes from assets/app.js - welcome to AssetMapper! 🎉")}},e=>{var s;s=28,e(e.s=s)}]);

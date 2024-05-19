@@ -12,11 +12,11 @@
         text-body-emphis mt-5 mb-5">{{document.title}}
 </p>
 <div class="mb-3">
-    <div class="row p-2 g-2 d-flex flex-wrap bg-white border">
-            <div class=" col-md-3">
+    <div class="row  g-3 d-flex flex-wrap bg-white border">
+            <div class=" col-md-3 m-1">
                 {% if document.fileNameImageDocument  %}
                     <img src="{{ vich_uploader_asset(document, 'imageDocument') }}"  
-                        class="img-fluid rounded-start" 
+                        class="img-fluid img-thumbnail" 
                         alt="affiche {{ document.title }}" 
                     />
                 
@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Auteur : {{ document.author }}</h5>
                     <p class="card-text">Description :</p>
-                    <p class="card-text">{{ document.description|raw }}</p>
+                    <p class="card-text text-break">{{ document.description|raw }}</p>
                     <p class="card-text"><small 
                         class="text-body-secondary">
                         Archivé le : {{ document.publishAt ? document.createdAt|date('d-m-Y') : ' ' }} - 
@@ -39,10 +39,11 @@
                         <span class="card-text"><small 
                         class="text-body-secondary">Note moyenne : </small></span>
                         {% if averageRate %}
-                            {% for i in range(5,1,-1) %}
+                           {#} {% for i in range(5,1,-1) %}
                                 <input disabled="disabled" type="radio" id="avgstar{{ i }}" name="avgstar" value="{{ i }}">
                                 <label="avgstar{{ i }}" title="{{i}} étoiles">{{i}} étoiles</label>
-                            {% endfor %}
+                            {% endfor %} #}
+                            <span class="card-text">{{ averageRate }}</span>
                         {% else %}
                             <span 
                             class="card-text">Il n'y a pas de note pour ce document. Soyez le premier à fournir une note !</span>
@@ -56,13 +57,56 @@
                     </div>
                 </div>
             </div>
-            <div class="card col-md-4 bg-primary">
+            
+    </div>
+
+     <div class="row p-2 g-3 my-3 d-flex flex-wrap bg-white border">
+            <p class = "display-6 text-center fw-bold 
+                text-body-emphis mt-5 mb-5">Vos derniers commentaires sur ce document
+            </p>
+            <div class="card col-md-12 bg-primary">
+                    <h4 class=" text-center mt-3 p-2">Ils ont dit ... </h4>
+                    {% if comments|length > 0 %}
+                      {% for i in comments %}
+                        <div class="card m-3 p-3" > 
+                            <div class="row g-2 d-flex flex-row">
+                                    <div class="col col-md-2">
+                                        {% if i.users.imageNameAvatar  %}
+                                            <img src="{{ vich_uploader_asset(document, 'imageDocument') }}" 
+                                                class="rounded-circle" 
+                                                alt="affiche {{ i.users.pseudo }}" 
+                                                width="50px"
+                                                higth="50px"/>
+                                        {% else %}
+                                            <img src="{{ asset('build/images/default/image-default.png')}}" 
+                                                class="rounded-circle" alt="affiche {{i.users.pseudo}}"
+                                                width="50px"
+                                                higth="50px"/>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col col-md-2">
+                                        <p>{{ i.users.pseudo }}</p>
+                                        <p>{{ i.createdAt|date('d-m-Y') }}</p>
+                                    </div>
+                                     <div class="col col-md-4">
+                                        <p>{{ i.content }}</p>
+                                    </div>
+                            </div>
+                        </div>
+                        {% endfor %} 
+                    {% else %}
+                        <p class="text-center">Il n'y a pas de commentaire pour ce document. Soyez le premier à laisser un avis !</p>
+                    {% endif %}
+            </div>
+    </div>
+    <div class="row p-2 g-3 my-3 d-flex flex-wrap bg-white border">
+            <div class="card col-md-12 bg-primary">
                     <h4 class=" text-center mt-3 p-2">Laisser une note et un avis </h4>
                     <div class="card m-3 p-3" > 
                             {% if user %}
                                 {% include "partials/comment/_form_comment.html.twig" %} 
                             {% else %}
-                                <p>Vous devez être connecté pour pouvoir télécharger, donner une note et laisser un avis. Connectez-vous ?
+                                <p class="text-center">Vous devez être connecté pour pouvoir télécharger, donner une note et laisser un avis. Connectez-vous ?
                                     <a href="{{path('app_login')}}">Je me connecte</a>
                                 </p> 
                             {% endif %}
@@ -71,7 +115,7 @@
     </div>
 </div>
 
-{#
+
 <div>
     <img src="{{ vich_uploader_asset(user, 'imageFileAvatar') }}" 
             class="img-fluid rounded-start" 
@@ -79,9 +123,9 @@
             width="100px"
             higth="100px"/>
 </div>
-#}
+
 <div class="row text-center m-5">
-    <a href="{{ path('app_document_index') }}">Retour à la liste</a>
+    <a href="{{ path('app_document_index') }}">Retour au catalogue</a>
 </div>
 {% endblock %}
 

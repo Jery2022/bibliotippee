@@ -22,14 +22,13 @@ class DocumentController extends AbstractController
     #[Route('/', name: 'app_document_index', methods: ['GET'])]
     public function index(DocumentRepository $documentRepository): Response
     {
-        
+
         $allDocuments = $documentRepository->findBy(
             ['isPublished' => true],
             ['createdAt' => 'DESC'],
         );
 
         $websiteName = 'BiblioTIPPEE';
-        // dd($allDocuments);
 
         return $this->render('document/index.html.twig', [
             'websiteName' => $websiteName,
@@ -49,7 +48,10 @@ class DocumentController extends AbstractController
 
         $session->set('previous_url', $request->getUri());
         $averageRate = $commentRepository->getAverageByComment($document->getId());
+        $commentsByDocument = $commentRepository->getCommentsByDocument($document->getId());
         $user = $security->getUser();
+
+        //dd($user);
 
         $comment = $commentRepository->findOneBy([
             'documents' => $document,
@@ -78,13 +80,12 @@ class DocumentController extends AbstractController
             // return $this->redirectToRoute('comment_success');
         }
 
-        // dd($document->getFileNameImageDocument());
-
         return $this->render('document/show.html.twig', [
             'document' => $document,
             'form' => $form,
             'user' => $user,
             'averageRate' => $averageRate,
+            'comments' => $commentsByDocument,
         ]);
     }
 }

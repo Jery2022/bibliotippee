@@ -34,7 +34,7 @@ class CommentRepository extends ServiceEntityRepository
     //            ->getQuery()
     //            ->getResult()
     //        ;
-    //    } 
+    //    }
 
     //    public function findOneBySomeField($value): ?Comment
     //    {
@@ -46,7 +46,7 @@ class CommentRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    public function getAverageByComment($documentId): float|null
+    public function getAverageByComment($documentId): float | null
     {
         return $this->createQueryBuilder('c')
             ->select('AVG(c.rate) as averageRate')
@@ -54,5 +54,16 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('documentId', $documentId)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function getCommentsByDocument($documentId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.documents = :documentId')
+            ->setParameter('documentId', $documentId)
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
     }
 }

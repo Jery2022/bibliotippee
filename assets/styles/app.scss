@@ -24,11 +24,71 @@ button {
   color: white;
 }
 
-.social-media a {
-  display: flex;
-  flex-direction: column;
+/* Style the links inside the pill navigation menu */
+.pill-nav a {
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px;
+  margin: 2px;
   text-decoration: none;
-  color: #ee5e5e;
+  font-size: 17px;
+  border-radius: 5px;
+}
+
+/* Change the color of links on mouse-over */
+.pill-nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.pill-nav a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  width: 250px;
+}
+
+/* Style the icon bar links */
+.social-media a {
+  text-align: center;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 15px;
+  padding: 15px;
+  margin: 5px;
+}
+
+/* Style the social media icons with color, if you want */
+.social-media a:hover {
+  background-color: #000;
+}
+
+.facebook {
+  background: #3b5998;
+  color: white;
+}
+
+.twitter {
+  background: #55acee;
+  color: white;
+}
+
+.linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.youtube {
+  background: #bb0000;
+  color: white;
 }
 
 .wrapper {
@@ -47,7 +107,7 @@ button {
   flex-flow: row-reverse;
   justify-content: left;
 }
-
+/*
 .rate input[type='radio'] {
   display: none;
 }
@@ -77,4 +137,4 @@ button {
 .rate.enabled > input:checked ~ label:hover ~ label,
 .rate.enabled > label:hover ~ input:checked ~ label {
   color: #c59b08;
-}
+} */

@@ -81,7 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $download;
 
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
-    #[Vich\UploadableField(mapping: 'avatar', fileNameProperty: 'imageNameAvatar', size: 'imageSizeAvatar')]
+    #[Vich\UploadableField(mapping: 'user', fileNameProperty: 'imageNameAvatar', size: 'imageSizeAvatar')]
     #[Ignore()]
     private ?File $imageFileAvatar = null;
 
