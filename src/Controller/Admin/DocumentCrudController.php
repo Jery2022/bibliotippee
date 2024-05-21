@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Document;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -36,14 +37,22 @@ class DocumentCrudController extends AbstractCrudController
             ->setPageTitle('index', 'Liste des documents')
             ->setPageTitle('new', 'Ajouter un nouveau document')
             ->setPageTitle('edit', 'Modifier un document')
-            ->setDefaultSort(['id' => 'DESC', 'title' => 'ASC', 'author' => 'ASC', 'createdAt' => 'DESC'])
+            ->setDefaultSort(['id' => 'DESC', 'title' => 'ASC', 'createdAt' => 'DESC'])
             ->setPaginatorPageSize(10);
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('title', 'Titre du document :')
+            ->add('author', 'Nom de l\'auteur :')
+            ->add('createdAt', 'Date de création :')
+            ->add('isPublished', 'Publié ou pas :');
     }
 
     public function configureFields(string $pageName): iterable
     {
         $mappingParameter = $this->getParameter('vich_uploader.mappings');
-        // $documentMapping = $mappingParameter['document']['uri_prefix'];
         $pagegardeMapping = $mappingParameter['imagedocument']['uri_prefix'];
 
         yield IdField::new ('id')->hideOnForm();

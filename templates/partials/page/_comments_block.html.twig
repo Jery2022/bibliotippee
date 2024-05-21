@@ -1,34 +1,41 @@
 
 {% block body %}
-    <div class="container-fluid px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-    
-        {% for comment in comments %}
-                <div class="col mb-5">
-                        <div class="card h-100">
-                            <img class="card-img-top" 
-                                src="{{ vich_uploader_asset(user, 'imageNameDocument') }}" 
-                                alt="Affiche {{ document.title }}"  />
-                            <!-- comment elements--> 
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- comment content-->
-                                    <h5 class="fw-bolder">Commentaire : {{ document->comment.content }}</h5>
-                                </div>  
-                                <!-- comment rate-->
-                                <div class="text-center">
-                                    <!-- comment content-->
-                                    <h5 class="fw-bolder">Rate : {{ document.comment.rate }}</h5>
-                                </div>    
-                                    <!-- Document dates -->
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="dateformat">Publié le : {{ document.comment.publishAt ? document.comment.publishAt|date('d-m-Y H:i:s') : ' ' }}</div>
-                                </div>  
+     <div class="row p-2 g-3 my-3 d-flex flex-wrap bg-white border">
+            {% if comments|length > 0 %}
+                <div class="card col-md-12 bg-primary">
+                     <h4 class=" text-center mt-3 p-2">Ils ont dit ... </h4>
+                      {% for i in comments %}
+                        <div class="card m-3 p-3" > 
+                            <div class="row g-2 d-flex flex-row">
+                                    <div class="col col-md-2">
+                                        {% if i.users.imageNameAvatar  %}
+                                            <img src="{{ vich_uploader_asset(i.users, 'imageFileAvatar') }}" 
+                                                class="rounded-circle" 
+                                                alt="affiche {{ i.users.pseudo }}" 
+                                                width="50px"
+                                                higth="50px"/>
+                                        {% else %}
+                                            <img src="{{ asset('build/images/default/image-default.png')}}" 
+                                                class="rounded-circle" alt="photo {{i.users.pseudo}}"
+                                                width="50px"
+                                                higth="50px"/>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col col-md-2">
+                                        <p>{{ i.users.pseudo }}</p>
+                                        <p>{{ i.createdAt|date('d-m-Y') }}</p>
+                                    </div>
+                                     <div class="col col-md-4">
+                                        <p>{{ i.content }}</p>
+                                    </div>
                             </div>
-                    </div>
-            </div>
-        {% else %}
-                <div class="text-center bg-warning">Désolé aucun commentaire trouvé !</div>
-        {% endfor %}
-        </div>
+                        </div>
+                        {% endfor %} 
+                </div>
+            {% else %}
+                <div class="card col-md-12 bg-warning">
+                    <p class="text-center text-white pt-3">Oups ! Il n'y a pas d'avis de publier pour le moment. Soyez le premier à laisser un avis !</p>
+                </div>
+            {% endif %}
+    </div>    
 {% endblock %}

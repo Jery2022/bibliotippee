@@ -66,4 +66,15 @@ class CommentRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getComments($isValided): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.comment = :isValided')
+            ->setParameter('isValided', $isValided)
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
 }

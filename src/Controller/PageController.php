@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CommentRepository;
 use App\Repository\DocumentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -14,6 +15,7 @@ class PageController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(
         DocumentRepository $documentRepository,
+        CommentRepository $commentRepository,
         Security $security,
         ParameterBagInterface $parameterBagInterface
     ): Response {
@@ -25,15 +27,19 @@ class PageController extends AbstractController
                 ['isPublished' => true],
                 ['createdAt' => 'DESC'], $limit);
 
-        $isConnected = $security->isGranted('ROLE_USER');
+        $comments = $commentRepository
+            ->findBy(
+                ['isValided' => true],
+                ['createdAt' => 'DESC'], $limit);
 
-        //dd($isConnected);
+        $isConnected = $security->isGranted('ROLE_USER');
 
         $websiteName = 'BiblioTIPPEE';
 
         return $this->render('page/index.html.twig', [
             'websiteName' => $websiteName,
             'documents' => $documents,
+            'comments' => $comments,
             'isConnected' => $isConnected,
         ]);
     }

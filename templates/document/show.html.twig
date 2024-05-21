@@ -65,10 +65,10 @@
 
      <div class="row p-2 g-3 my-3 d-flex flex-wrap bg-white border">
             <p class = "display-6 text-center fw-bold 
-                text-body-emphis mt-5 mb-5">Vos derniers commentaires sur ce document
+                text-body-emphis mt-5 mb-5">Votre commentaire sur ce document
             </p>
             <div class="card col-md-12 bg-primary">
-                    <h4 class=" text-center mt-3 p-2">Ils ont dit ... </h4>
+                    <h4 class=" text-center mt-3 p-2">Vous avez dit ... </h4>
                     {% if comments|length > 0 %}
                       {% for i in comments %}
                         <div class="card m-3 p-3" > 
@@ -104,7 +104,7 @@
     </div>
     <div class="row p-2 g-3 my-3 d-flex flex-wrap bg-white border">
             <div class="card col-md-12 bg-primary">
-                    <h4 class=" text-center mt-3 p-2">Laisser une note et un avis </h4>
+                    <h4 class=" text-center mt-3 p-2">Modifier au besoin votre note et avis </h4>
                     <div class="card m-3 p-3" > 
                             {% if user %}
                                 {% include "partials/comment/_form_comment.html.twig" %} 
@@ -117,16 +117,6 @@
             </div>
     </div>
 </div>
-
-{# }
-<div>
-    <img src="{{ vich_uploader_asset(user, 'imageFileAvatar') }}" 
-            class="img-fluid rounded-start" 
-            alt="affiche {{ user.pseudo }}" 
-            width="100px"
-            higth="100px"/>
-</div>
-#}
 
 <div class="row text-center m-5">
     <a href="{{ path('app_document_index') }}">Retour au catalogue</a>

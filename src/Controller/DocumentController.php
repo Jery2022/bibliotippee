@@ -51,8 +51,6 @@ class DocumentController extends AbstractController
         $commentsByDocument = $commentRepository->getCommentsByDocument($document->getId());
         $user = $security->getUser();
 
-        //dd($user);
-
         $comment = $commentRepository->findOneBy([
             'documents' => $document,
             'users' => $user,
@@ -77,7 +75,7 @@ class DocumentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            // return $this->redirectToRoute('comment_success');
+            $message = 'Votre commentaire a bien été enregistré. Il sera publié après validation par un administrateur.';
         }
 
         return $this->render('document/show.html.twig', [
@@ -86,6 +84,8 @@ class DocumentController extends AbstractController
             'user' => $user,
             'averageRate' => $averageRate,
             'comments' => $commentsByDocument,
+            'message' => $message ?? null,
         ]);
     }
+
 }
