@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Document;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,9 +18,30 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class DocumentRepository extends ServiceEntityRepository
 {
+
+    public const DOCUMENTS_PER_PAGE = 4;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Document::class);
+    }
+
+    public function getDocumentPaginator(Document $document, int $offset): Paginator
+    {
+        $query = $this->createQueryBuilder('c')
+            ->Where('c.document = :document ?1')
+            ->andWhere(new Expr\Orx([
+                'c.isPublished = :isPublished ?2',
+            ]))
+            ->setParameter(1, 'document', $document)
+            ->setParameter(2, 'isPublished', true)
+            ->orderBy('c.createdAt', 'DESC')
+            ->setMaxResults(self::DOCUMENTS_PER_PAGE)
+            ->setFirstResult($offset)
+            ->getQuery()
+        ;
+
+        return new Paginator($query);
     }
 
     //    /**

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Document;
 use App\Form\CommentType;
+use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\DocumentRepository;
 use DateTimeImmutable;
@@ -20,19 +21,34 @@ use Symfony\Component\Routing\Attribute\Route;
 class DocumentController extends AbstractController
 {
     #[Route('/', name: 'app_document_index', methods: ['GET'])]
-    public function index(DocumentRepository $documentRepository): Response
-    {
+    public function index(
+        //  Request $request,
+        //  Document $document,
+        DocumentRepository $documentRepository,
+        CategoryRepository $categoryRepository,
+        CommentRepository $commentRepository): Response {
 
+        /*  $document = new Document();
+        dd($document);
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginatorDoc = $documentRepository->getDocumentPaginator($document, $offset);
+         */
         $allDocuments = $documentRepository->findBy(
             ['isPublished' => true],
             ['createdAt' => 'DESC'],
         );
+
+        $catogories = $categoryRepository->findAll();
 
         $websiteName = 'BiblioTIPPEE';
 
         return $this->render('document/index.html.twig', [
             'websiteName' => $websiteName,
             'documents' => $allDocuments,
+            'categories' => $catogories,
+            // 'comments' => $paginatorDoc,
+            //'previous' => $offset - DocumentRepository::DOCUMENTS_PER_PAGE,
+            // 'next' => min(count($paginatorDoc), $offset + DocumentRepository::DOCUMENTS_PER_PAGE),
         ]);
     }
 
@@ -46,11 +62,14 @@ class DocumentController extends AbstractController
         SessionInterface $session,
     ): Response {
 
-        $session->set('previous_url', $request->getUri());
-        $averageRate = $commentRepository->getAverageByComment($document->getId());
-        $commentsByDocument = $commentRepository->getCommentsByDocument($document->getId());
-        $user = $security->getUser();
+        $session->set('previous_url', $request->getUri()); // récupération de l'url précédente et mise en session
+        $averageRate = $commentRepository->getAverageByComment($document->getId()); // récupération de la moyenne des notes
+        $user = $security->getUser(); // récupération de l'entité utilisateur connecté
 
+        $commentsByDocument = $commentRepository->getCommentsByDocument($document->getId()); // récupération de tous les commentaires du document ciblé
+        $commentByDocumentByUser = $commentRepository->getCommentByDocumentByUser($document->getId(), $user->getId()); // récupération du commentaire du document ciblé pour l'utilisateur connecté
+
+        //dd($commentByDocumentByUser);
         $comment = $commentRepository->findOneBy([
             'documents' => $document,
             'users' => $user,
@@ -84,6 +103,7 @@ class DocumentController extends AbstractController
             'user' => $user,
             'averageRate' => $averageRate,
             'comments' => $commentsByDocument,
+            'comment' => $commentByDocumentByUser,
             'message' => $message ?? null,
         ]);
     }

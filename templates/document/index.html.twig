@@ -3,17 +3,24 @@
 {% block title %}Catalogue{% endblock %}
 
 {% block body %}
-    <section class="container-fluid bg-success py-5">
-            <div class=" px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Consulter notre catalogue de documents en ligne</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Le devoir de rendre compte</p>
+    <main>
+            <section class="container-fluid bg-success py-5">
+                    <div class=" px-4 px-lg-5 my-4">
+                        <div class="text-center text-white">
+                            <h1 class="display-5 fw-bolder">Consulter notre catalogue de documents en ligne</h1>
+                            <p class="lead fw-normal text-white-50 mb-0">Le devoir de rendre compte</p>
+                        </div>
+                    </div>
+            </section>
+            <section class="container py-5">
+                {% include 'partials/document/_document_block.html.twig' %}
+            </section>
+            <section class="container py-5">
+                <div class="text-center display-5 fw-bolder px-lg-5 my-4">
+                    Informations utiles sur le catalogue
                 </div>
-            </div>
-    </section>
-    
-    <section class="py-3">
-         {% include 'partials/document/_document_block.html.twig' %}
-    </section>
-
+            </section>
+    </main>
 {% endblock %}
+
+ 

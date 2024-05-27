@@ -39,33 +39,29 @@
                         <span class="card-text"><small 
                         class="text-body-secondary">Note moyenne : </small></span>
                         {% if averageRate %}
-                           {#} {% for i in range(5,1,-1) %}
-                                <input disabled="disabled" type="radio" id="avgstar{{ i }}" name="avgstar" value="{{ i }}">
-                                <label="avgstar{{ i }}" title="{{i}} étoiles">{{i}} étoiles</label>
-                            {% endfor %} #}
                             <span class="card-text">{{ averageRate }} | </span>
-                            {% for i in range( averageRate ,1,-1) %}
-                                <span class="avgstar fa fa-star checked avgstar"></span>
-                            {% endfor %}
+                                {% for i in range( averageRate ,1,-1) %}
+                                    <span class="avgstar fa fa-star checked avgstar"></span>
+                                {% endfor %}
                         {% else %}
                             <span 
-                            class="card-text">Il n'y a pas de note pour ce document. Soyez le premier à fournir une note !</span>
+                                class="card-text">Il n'y a pas de note pour ce document. Soyez le premier à fournir une note !</span>
                         {% endif %}
                     </div>
                     <div class="d-flex justify-content-between mt-3">
                         <a href="# {#{ path('app_document_open', {'id': document.id}) } #} ">Lire</a>
-                        {% if app.user  %}
+                         {% if app.user  %}  
                             <a href=" #{#{ path('app_document_download', {'id': document.id}) }#} ">Télécharger</a>
-                        {% endif %}
+                         {% endif %}  
                     </div>
                 </div>
             </div>
-            
     </div>
-
-     <div class="row p-2 g-3 my-3 d-flex flex-wrap bg-white border">
+    {# Block d'affichage des commentaires #}
+    <div class="row p-2 g-3 my-3 d-flex flex-wrap bg-white border">
+        {% if user %}
             <p class = "display-6 text-center fw-bold 
-                text-body-emphis mt-5 mb-5">Votre commentaire sur ce document
+                text-body-emphis mt-5 mb-5">Vos commentaires sur ce document
             </p>
             <div class="card col-md-12 bg-primary">
                     <h4 class=" text-center mt-3 p-2">Vous avez dit ... </h4>
@@ -84,12 +80,13 @@
                                             <img src="{{ asset('build/images/default/image-default.png')}}" 
                                                 class="rounded-circle" alt="affiche {{i.users.pseudo}}"
                                                 width="50px"
-                                                higth="50px"/>
+                                                higth="50px" 
+                                                />
                                         {% endif %}
                                     </div>
                                     <div class="col col-md-2">
                                         <p>{{ i.users.pseudo }}</p>
-                                        <p>{{ i.createdAt|date('d-m-Y') }}</p>
+                                        <p>{{ i.createdAt|format_datetime('medium', 'short') }}</p>
                                     </div>
                                      <div class="col col-md-4">
                                         <p>{{ i.content }}</p>
@@ -101,10 +98,10 @@
                         <p class="text-center">Il n'y a pas de commentaire pour ce document. Soyez le premier à laisser un avis !</p>
                     {% endif %}
             </div>
-    </div>
-    <div class="row p-2 g-3 my-3 d-flex flex-wrap bg-white border">
-            <div class="card col-md-12 bg-primary">
-                    <h4 class=" text-center mt-3 p-2">Modifier au besoin votre note et avis </h4>
+         {# Fin du block d'affichage des commentaires #}
+         {# Debut du block d'affichage du formulaire d'ajout de commentaires #}
+            <div class="card col-md-12 py-3 bg-primary">
+                    <h4 class=" text-center my-3">Laisser ou modifier votre note et commentaire </h4>
                     <div class="card m-3 p-3" > 
                             {% if user %}
                                 {% include "partials/comment/_form_comment.html.twig" %} 
@@ -114,7 +111,56 @@
                                 </p> 
                             {% endif %}
                     </div>
+                </div>
+        {# Fin du block d'affichage du formulaire d'ajout de commentaires si connecté #}
+        {% else %}
+        {# Début du block d'affichage des commentaires si l'utilisateuer n'est pas connecté #}
+            <p class = "display-6 text-center fw-bold 
+                text-body-emphis mt-5 mb-5">Vos Commentaires sur ce document
+            </p>
+            <div class="card col-md-12 bg-primary">
+                    <h4 class=" text-center mt-3 p-2">Ils ont dit ... </h4>
+                    {% if comments|length > 0 %}
+                      {% for i in comments %}
+                        <div class="card m-3 p-3" > 
+                            <div class="row g-2 d-flex flex-row">
+                                    <div class="col col-md-2">
+                                        {% if i.users.imageNameAvatar  %}
+                                            <img src="{{ vich_uploader_asset(document, 'imageDocument') }}" 
+                                                class="rounded-circle" 
+                                                alt="affiche {{ i.users.pseudo }}" 
+                                                width="50px"
+                                                higth="50px" 
+                                                />
+                                        {% else %}
+                                            <img src="{{ asset('build/images/default/image-default.png')}}" 
+                                                class="rounded-circle" alt="affiche {{i.users.pseudo}}"
+                                                width="50px"
+                                                higth="50px" 
+                                                />
+                                        {% endif %}
+                                    </div>
+                                    <div class="col col-md-2">
+                                        <p>{{ i.users.pseudo }}</p>
+                                        <p>{{ i.createdAt|format_datetime('medium', 'short') }}</p>
+                                    </div>
+                                     <div class="col col-md-4">
+                                        <p>{{ i.content }}</p>
+                                    </div>
+                            </div>
+                        </div>
+                        {% endfor %} 
+                    {% else %}
+                        <p class="text-center">Il n'y a pas de commentaire pour ce document. Soyez le premier à laisser un avis !</p>
+                    {% endif %}
+                <div >
+                    <p class="text-center text-white">Vous devez être connecté pour pouvoir donner une note et laisser un avis. Connectez-vous ici ?
+                        <a class="text-white" href="{{path('app_login')}}">Je me connecte</a>
+                    </p>
+                </div>
             </div>
+        {# Fin du block d'affichage des commentaires si utilisateuer pas connecté #}
+        {% endif %}
     </div>
 </div>
 

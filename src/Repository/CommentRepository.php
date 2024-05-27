@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,9 +17,25 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentRepository extends ServiceEntityRepository
 {
+    public const COMMENTS_PER_PAGE = 4;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
+    }
+
+    public function getCommentPaginator(Comment $comment, int $offset): Paginator
+    {
+        $query = $this->createQueryBuilder('c')
+            ->andWhere('c.comment = :comment')
+            ->setParameter('comment', $comment)
+            ->orderBy('c.createdAt', 'DESC')
+            ->setMaxResults(self::COMMENTS_PER_PAGE)
+            ->setFirstResult($offset)
+            ->getQuery()
+        ;
+
+        return new Paginator($query);
     }
 
     //    /**
@@ -74,6 +91,18 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('isValided', $isValided)
             ->orderBy('c.id', 'DESC')
             ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getCommentByDocumentByUser($documentId, $userId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.documents = ?0')
+            ->andWhere('c.users = ?1')
+            ->setParameter(0, $documentId)
+            ->setParameter(1, $userId)
+            ->orderBy('c.id', 'DESC')
             ->getQuery()
             ->getResult();
     }

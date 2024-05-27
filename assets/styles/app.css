@@ -12003,6 +12003,63 @@ button {
   color: white;
 }
 
+/* CSS for filter */
+.rowFilter {
+  margin: 8px -16px;
+}
+
+/* Add padding BETWEEN each column (if you want) */
+.rowFilter,
+.rowFilter > .columnFilter {
+  padding: 8px;
+}
+
+/* Create three equal columns that floats next to each other */
+.columnFilter {
+  float: left;
+  width: 33.33%;
+  display: none; /* Hide columns by default */
+}
+
+/* Clear floats after rows */
+.rowFilter:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Content */
+.contentFilter {
+  background-color: white;
+  padding: 10px;
+}
+
+/* The "show" class is added to the filtered elements */
+.showFilter {
+  display: block;
+}
+
+/* Style the buttons */
+.btnFilter {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: white;
+  cursor: pointer;
+}
+
+/* Add a grey background color on mouse-over */
+.btnFilter:hover {
+  background-color: #ddd;
+}
+
+/* Add a dark background color to the active button */
+.btnFilter.active {
+  background-color: #666;
+  color: #ffffff;
+}
+
+/* End CSS for filter */
 .social-media {
   display: flex;
   justify-content: center;
