@@ -36,17 +36,12 @@ class ContactController extends AbstractController
                 ->to('jewomba@hotmail.com')
                 ->subject($subject)
                 ->text($content);
-           
+
             try {
                 // Envoi de l'email
                 $mailer->send($email);
-                $successMsg = 'Votre email a bien été envoyé !';
-/*
-return $this->render('contact/index.html.twig', [
-'websiteName' => $websiteName,
-'form' => $form->createView(),
-'successMsg' => $successMsg,
-]); */
+                $this->addFlash('success', 'Votre email a bien été envoyé !');
+                return $this->redirectToRoute('app_contact');
 
             } catch (TransportExceptionInterface $e) {
                 // some error prevented the email sending; display an
@@ -65,7 +60,7 @@ return $this->render('contact/index.html.twig', [
         return $this->render('contact/index.html.twig', [
             'websiteName' => $websiteName,
             'form' => $form->createView(),
-            'successMsg' => $successMsg,
+            // 'successMsg' => $successMsg,
         ]);
     }
 }

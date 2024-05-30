@@ -39,15 +39,7 @@ class ContactType extends AbstractType
                 ],
                     'label' => 'Envoyer',
                 ]
-            )
-            ->add('Quitter', SubmitType::class,
-                ['attr' => ['class' => 'btn btn-danger text-center p-2 ',
-                    'style' => 'margin: 10px auto; width: 35%; high: 50px;',
-                ],
-                    'label' => 'Quitter',
-                ]
-            )
-        ;
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
