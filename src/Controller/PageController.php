@@ -66,13 +66,13 @@ class PageController extends AbstractController
             'websiteName' => $websiteName,
         ]);
     }
-
-    #[Route('/contact', name: 'app_contact')]
-    public function contact(): Response
-    {
-        $websiteName = 'BiblioTIPPEE';
-        return $this->render('contact/index.html.twig', [
-            'websiteName' => $websiteName,
-        ]);
-    }
+/*
+#[Route('/contact', name: 'app_contact')]
+public function contact(): Response
+{
+$websiteName = 'BiblioTIPPEE';
+return $this->render('contact/index.html.twig', [
+'websiteName' => $websiteName,
+]);
+} */
 }

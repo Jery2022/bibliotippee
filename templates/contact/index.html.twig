@@ -1,23 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Page de contact{% endblock %}
 
 {% block body %}
- <div >
-    <div style="background-color: #f0f0f0;">
-        <img src="{{ asset('assets/images/logo/Logo-cntippee100.jpg') }}" width="100px" alt="logo_cntippee">
-        <h1>{{ websiteName }}</h1>
+<div class="container">
+    <div class="col col-xl-5 mx-auto mt-3 mb-3 bg-light">
+        {{ form_errors(form) }}
+        {% if errorMsg is defined %}
+            <div class="alert alert-warning text-center">{{ errorMsg }}</div>
+        {% endif %}
+        {% if successMsg is defined %}
+            <div class="alert alert-success text-center">{{ successMsg }}</div>
+        {% endif %}
+        
     </div>
+    <div class="col col-xl-5 mx-auto mt-3 mb-3 bg-light">
+        <div class="col bg-white"  >
+            <div class="row justify-content-center">
+                <img src="{{ asset('build/images/logo/Logo-cntippee100.jpg') }}" 
+                        alt="logo bibliotippee" 
+                        style="width:100px; height:100px; align:center; margin: 25px;"
+                        />
+            </div>
+            
+        </div>
 
-    <div style="background-color: #d0d0d0;">
-        <h2>Contactez-nous</h2>
-        <form action="/email" method="post">
-            <label for="email">Votre email :</label><br>
-            <input type="email" id="email" name="email"><br>
-            <label for="message">Votre message :</label><br>
-            <textarea id="message" name="message"></textarea><br>
-            <input class="btn btn-lg btn-success" type="submit" value="Envoyer">
-        </form>
+        <div style="background-color: #d0d0d0;">
+            <h5 class="text-center p-3">Contactez-nous</h5>
+            <div class="col p-3">
+            {{ form_start(form) }}
+                {{ form_row(form.subject) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.content) }}
+            {{ form_end(form) }}  
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
