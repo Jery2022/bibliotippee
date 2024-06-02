@@ -1,41 +1,35 @@
-
 {% block body %}
-     <div class="row p-2 g-3 my-3 d-flex flex-wrap bg-white border">
-            {% if comments|length > 0 %}
-                <div class="card col-md-12 bg-primary">
-                     <h4 class=" text-center mt-3 p-2">Ils ont dit ... </h4>
-                      {% for i in comments %}
-                        <div class="card m-3 p-3" > 
-                            <div class="row g-2 d-flex flex-row">
-                                    <div class="col col-md-2">
-                                        {% if i.users.imageNameAvatar  %}
-                                            <img src="{{ vich_uploader_asset(i.users, 'imageFileAvatar') }}" 
-                                                class="rounded-circle" 
-                                                alt="affiche {{ i.users.pseudo }}" 
-                                                width="50px"
-                                                higth="50px"/>
-                                        {% else %}
-                                            <img src="{{ asset('build/images/default/image-default.png')}}" 
-                                                class="rounded-circle" alt="photo {{i.users.pseudo}}"
-                                                width="50px"
-                                                higth="50px"/>
-                                        {% endif %}
-                                    </div>
-                                    <div class="col col-md-2">
-                                        <p>{{ i.users.pseudo }}</p>
-                                        <p>{{ i.createdAt|format_datetime('medium', 'short')}}</p>
-                                    </div>
-                                     <div class="col col-md-4">
-                                        <p>{{ i.content }}</p>
-                                    </div>
-                            </div>
-                        </div>
-                        {% endfor %} 
-                </div>
-            {% else %}
-                <div class="card col-md-12 bg-warning">
-                    <p class="text-center text-white pt-3">Oups ! Il n'y a pas d'avis de publier pour le moment. Soyez le premier à laisser un avis !</p>
-                </div>
-            {% endif %}
-    </div>    
+	<div class="row p-2 g-3 my-3 d-flex flex-wrap
+									        bg-white border">
+		{% if comments|length > 0 %}
+			<div class="card col-md-12 bg-primary">
+				<h4 class=" text-center mt-3 p-2">Ils ont dit ...
+				</h4>
+				{% for i in comments %}
+					<div class="card m-3 p-3">
+						<div class="row g-2 d-flex flex-row">
+							<div class="col col-md-2">
+								{% if i.users.imageNameAvatar  %}
+									<img src="{{ vich_uploader_asset(i.users, 'imageFileAvatar') }}" class="rounded-circle" alt="affiche {{ i.users.pseudo }}" width="50px" higth="50px"/>
+								{% else %}
+									<img src="{{ asset('build/images/default/image-default.png')}}" class="rounded-circle" alt="photo {{i.users.pseudo}}" width="50px" higth="50px"/>
+								{% endif %}
+							</div>
+							<div class="col col-md-2">
+								<p>{{ i.users.pseudo }}</p>
+								<p>{{ i.createdAt|format_datetime('medium', 'short')}}</p>
+							</div>
+							<div class="col col-md-4">
+								<p>{{ i.content }}</p>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% else %}
+			<div class="card col-md-12 bg-warning">
+				<p class="text-center text-white pt-3">Oups ! Il n'y a pas d'avis de publier pour le moment. Soyez le premier à laisser un avis !</p>
+			</div>
+		{% endif %}
+	</div>
 {% endblock %}

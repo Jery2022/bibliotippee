@@ -1,87 +1,87 @@
-
 {% block body %}
-    <div class="row align-items-center bg-warning my-4 py-4
-                            g-3 justify-content-between ">
+	<div class="row align-items-center bg-warning my-4 py-4
+																											                            g-3 justify-content-between ">
 
-            {% if categories %}
-                <div class="col col-md-3">
-                        <select class="form-select" aria-label="select by category">
-                            <option selected>Choisir une catégorie</option>
-                                {% for category in categories %}
-                                    <option value="{{ path('app_document_index', {'category': category.id}) }}">{{ category.intitule }}</option>
-                                {% endfor %}
-                        </select>
-                </div>
-            {% else %}
-                    <div class="text-center bg-warning">Désolé aucune catégorie trouvée !</div>
-            {% endif %}
-    </div>
-    <div class="container-fluid px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 
-                row-cols-xl-4 justify-content-center">
-    
-        {% for doc in documents %} 
-                <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Download badge-->
-                            <div class="badge bg-dark text-white position-absolute" 
-                                style="top: 0.5rem; right: 0.5rem">Download</div>
-                            <!-- favori badge-->
-                            <div class="badge bg-dark text-white position-absolute" 
-                                style="top: 0.5rem; left: 0.5rem">Favorite</div>
-                            <!-- document image-->
-                            {% if doc.fileNameImageDocument  %}
-                            <img class="img-fluid rounded-start" 
-                                src="{{ vich_uploader_asset(doc, 'imageDocument') }}" 
-                                alt="affiche {{ doc.title }}" 
-                                /> 
-                            {% else %}
-                            <img class="card-img-top" 
-                                src="{{ asset('build/images/default/image-default.png') }}" 
-                                alt="Affiche {{ doc.title }}"  /> 
-                            {% endif %}
-                            <!-- document details--> 
-                            <div class="card-body p-4"> 
-                                <div class="text-center">
-                                    <!-- Document name-->
-                                    <h5 class="fw-bolder">Titre : {{ doc.title }}</h5>
-                                    <!-- Document author-->
-                                    <h7 class="fw-bolder">Auteur : {{ doc.author }}</h5>
-                                    <!-- Document reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill">*</div>
-                                        <div class="bi-star-fill">*</div>
-                                        <div class="bi-star-fill">*</div>
-                                        <div class="bi-star-fill">*</div>
-                                        <div class="bi-star-fill">*</div>
-                                    </div>
-                                    <!-- Document description -->
-                                    <div>{{ doc.description }}</div>
-                                    <!-- Document dates -->
-                                   <div class="d-flex justify-content-between text-warning mb-2  mt-3">
-                                        <div class="dateformat">Crée le {{ doc.createdAt ? doc.createdAt|date('d-m-Y') : '' }}</div>
-                                        <div class="dateformat">Publié le {{ doc.publishAt ? doc.publishAt|date('d-m-Y') : '' }}</div>
-                                    </div> 
-                                </div>
-                            </div>
-                            <!-- Document actions-->
-                            <div class="row card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-success mt-auto" 
-                                    href="{{ path('app_document_show', {'id': doc.id}) }}">Voir la fiche</a>
-                                </div>
-                                 {% if app.user  %}
-                                    <div class="text-center"><a class="btn btn-outline-success mt-auto" 
-                                        href="{{ path('app_document_show', {'id': doc.id}) }}">Lire </a>
-                                    </div>
-                                    <div class="text-center"><a class="btn btn-outline-success mt-auto" 
-                                        href="{{ path('app_document_show', {'id': doc.id}) }}">Télécharger</a>
-                                    </div>
-                                {% endif %}
-                            </div>
-                    </div>
-            </div>
-        {% else %}
-                <div class="text-center bg-warning">Désolé aucun document trouvé !</div>
-        {% endfor %}
-        </div>
-{% endblock %}
+		{% if categories %}
+			<div class="col col-md-3">
+				<select class="form-select" aria-label="select by category">
+					<option selected>Choisir une catégorie</option>
+					{% for category in categories %}
+						<option value="{{ path('app_document_index', {'category': category.id}) }}">{{ category.intitule }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		{% else %}
+			<div class="text-center bg-warning">Désolé aucune catégorie trouvée !</div>
+		{% endif %}
+	</div>
+	<div class="container-fluid px-lg-5 mt-5">
+		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3
+																																				                row-cols-xl-4 justify-content-center">
+
+			{% for doc in documents %}
+				<div class="col mb-5">
+					<div
+						class="card h-100">
+						<!-- Download badge-->
+						<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Download</div>
+						<!-- favori badge-->
+						<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; left: 0.5rem">Favorite</div>
+						<!-- document image-->
+						{% if doc.fileNameImageDocument  %}
+							<img class="img-fluid rounded-start" src="{{ vich_uploader_asset(doc, 'imageDocument') }}" alt="affiche {{ doc.title }}"/>
+						{% else %}
+							<img class="card-img-top" src="{{ asset('build/images/default/image-default.png') }}" alt="Affiche {{ doc.title }}"/>
+						{% endif %}
+						<!-- document details-->
+						<div class="card-body p-4">
+							<div
+								class="text-center">
+								<!-- Document name-->
+								<h5 class="fw-bolder">Titre :
+									{{ doc.title }}</h5>
+								<!-- Document author-->
+								<h7 class="fw-bolder">Auteur :
+									{{ doc.author }}</h5>
+								<!-- Document reviews-->
+								<div class="d-flex justify-content-center small text-warning mb-2">
+									<div class="bi-star-fill">*</div>
+									<div class="bi-star-fill">*</div>
+									<div class="bi-star-fill">*</div>
+									<div class="bi-star-fill">*</div>
+									<div class="bi-star-fill">*</div>
+								</div>
+								<!-- Document description -->
+								<div>{{ doc.description|slice(0,50) }}</div>
+								<!-- Document dates -->
+								<div class="d-flex justify-content-between text-warning mb-2  mt-3">
+									<div class="dateformat">Crée le
+										{{ doc.createdAt ? doc.createdAt|date('d-m-Y') : '' }}</div>
+									<div class="dateformat">Publié le
+										{{ doc.publishAt ? doc.publishAt|date('d-m-Y') : '' }}</div>
+								</div>
+							</div>
+						</div>
+						<!-- Document actions-->
+						<div class="row card-footer p-4 pt-0 border-top-0 bg-transparent">
+							<div class="text-center">
+								<a class="btn btn-outline-success mt-auto" href="{{ path('app_document_show', {'id': doc.id}) }}">Voir la fiche</a>
+							</div>
+							{% if app.user and app.isVerified %}
+								<div class="text-center">
+									<a class="btn btn-outline-success mt-auto" href="{{ path('app_document_show', {'id': doc.id}) }}">Lire
+									</a>
+								</div>
+
+								<div class="text-center">
+									<a class="btn btn-outline-success mt-auto" href="{{ path('app_document_show', {'id': doc.id}) }}">Télécharger</a>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% else %}
+				<div class="text-center bg-warning">Désolé aucun document trouvé !</div>
+			{% endfor %}
+		</div>
+	{% endblock %}

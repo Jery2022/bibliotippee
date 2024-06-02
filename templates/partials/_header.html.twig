@@ -1,7 +1,7 @@
 <header class="m-2 py-3 bg-white border-bottom border-left">
 	<div class="container-fluid d-flex flex-wrap justify-content-center">
 		<a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto
-								        link-body-emphasis text-decoration-none">
+																																				        link-body-emphasis text-decoration-none">
 			<img src="{{ asset('build/images/logo/Logo-cntippee100.jpg') }}" alt="logo bibliotippee" width="50" height="50" class="me-2"/>
 			<span class="fs-4">
 				<font style="vertical-align: inherit;">
@@ -13,7 +13,12 @@
 			<input type="search" class="form-control" placeholder="Je recherche un document..." aria-label="Recherche">
 		</form>
 		<div class="text-end">
-			{% if app.user %}
+			{% if app.user and app.user.isVerified %}
+				<a href="{{ path('app_users') }}" class="btn btn-outline-success me-2">
+					<font style="vertical-align: inherit;">
+						<font style="vertical-align: inherit;">Mon Profil</font>
+					</font>
+				</a>
 				<a href="{{ path('app_logout') }}" class="btn btn-danger me-2">
 					<font style="vertical-align: inherit;">
 						<font style="vertical-align: inherit;">Se déconnecter</font>
@@ -35,10 +40,10 @@
 	</div>
 </header>
 <nav class="pill-nav
-						m-2 py-3 border-bottom border-left sticky-top
-			 			d-flex justify-content-center
-			 			bg-success
-					">
+																				m-2 py-3 border-bottom border-left sticky-top
+																	 			d-flex justify-content-center
+																	 			bg-success
+																			">
 	<div>
 		<ul class="nav me-auto">
 			<li class="nav-item ">

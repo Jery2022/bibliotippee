@@ -67,7 +67,7 @@ class DocumentController extends AbstractController
         $user = $security->getUser(); // récupération de l'entité utilisateur connecté
 
         $commentsByDocument = $commentRepository->getCommentsByDocument($document->getId()); // récupération de tous les commentaires du document ciblé
-        $commentByDocumentByUser = $commentRepository->getCommentByDocumentByUser($document->getId(), $user->getId()); // récupération du commentaire du document ciblé pour l'utilisateur connecté
+        $commentByDocumentByUser = $commentRepository->getCommentByDocumentByUser($document->getId(), $user); // récupération du commentaire du document ciblé pour l'utilisateur connecté
 
         //dd($commentByDocumentByUser);
         $comment = $commentRepository->findOneBy([

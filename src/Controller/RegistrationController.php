@@ -53,7 +53,7 @@ class RegistrationController extends AbstractController
             );
 
             // do anything else you need here, like send an email
-
+            $this->addFlash('verify_email_error', 'An email has been sent to you. Please check your inbox to verify your email address.');
             return $security->login($user, AppCustomAuthenticator::class, 'main');
         }
 
