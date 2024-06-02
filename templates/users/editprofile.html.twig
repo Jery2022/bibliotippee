@@ -1,0 +1,28 @@
+{% extends 'users.html.twig' %}
+
+{% block title %}Mofication du profil de
+	{{app.user.firstName}}
+	{{app.user.lastName}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid col col-md-12">
+		<div>
+			<h2 class="mb-4">Modification du profil de
+				{{app.user.firstName}}
+				{{app.user.lastName}}
+			</h2>
+		</div>
+		<hr>
+		<div class="col col-md-12 p-3">
+			{{ form_start(form) }}
+			{{ form_row(form.pseudo) }}
+			{{ form_row(form.firstName) }}
+			{{ form_row(form.lastName) }}
+			{{ form_row(form.email) }}
+			{#	{{ form_row(form.imageFileAvatar) }} #}
+			<button type="submit" class="btn btn-md btn-success mb-3">Modifier</button>
+			{{ form_end(form) }}
+		</div>
+	</div>
+{% endblock %}

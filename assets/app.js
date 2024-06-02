@@ -7,6 +7,7 @@
 //import * as bootstrap from 'bootstrap'
 import './styles/app.scss';
 import './bootstrap.js';
+
 //import bsCustomFileInput from 'bs-custom-file-input';
 //bsCustomFileInput.init();
 

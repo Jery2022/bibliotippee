@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head lang='fr'>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Bienvenue à BiblioTIPPEE
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{% block stylesheets %}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+			{% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %}
+		{% endblock %}
+	</head>
+	<body>
+		<header class="m-2 py-3 bg-white border-bottom border-left sticky-top">
+			<div class="container-fluid d-flex flex-wrap justify-content-between">
+				<a href="#" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								        link-body-emphasis text-decoration-none">
+					<img src="{{ asset('build/images/logo/Logo-cntippee100.jpg') }}" alt="logo bibliotippee" width="50" height="50" class="me-2"/>
+					<span class="fs-4">
+						<font style="vertical-align: inherit;">
+							<font style="vertical-align: inherit;">BiblioTIPPEE</font>
+						</font>
+					</span>
+				</a>
+
+			</div>
+		</header>
+		<div class="container-fluid d-flex align-items-stretch">
+			<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+				<div class="m-auto mt-3 mb-3">
+					<a href="{{ path('app_users') }}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+						<span class="fs-4">
+							<strong>Mon Profil</strong>
+						</span>
+					</div>
+					<div class="mx-3 mb-1">
+						<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+						Bienvenue,
+						<strong>{{app.user.pseudo}}</strong>
+					</div>
+				</a>
+				<hr>
+				<ul class="nav nav-pills flex-column mb-auto">
+					<li class="nav-item">
+						<a href="{{ path('app_users_edit_profil', {'id': app.user.id}) }}" class="nav-link text-white" aria-current="page">
+							Modifier mes informations
+						</a>
+					</li>
+					<li>
+						<a href="{{ path('app_users_edit_password', {'id': app.user.id}) }}" class="nav-link text-white">
+							Modifier mot de passe
+						</a>
+					</li>
+					<hr>
+					<li>
+						<a href="#" class="nav-link text-white">Mes Statistiques</a>
+					</li>
+					<hr>
+					<li>
+						<a href="{{ path('app_home') }}" class="nav-link text-white">
+							<i class="bi bi-house-door"></i>
+							Retour à l'accueil
+						</a>
+					</li>
+				</ul>
+			</div>
+			<main style="width: 100%;">
+				<div id="content" class="p-0 p-md-5 pt-5 bg-warning"> {% block body %}{% endblock %}
+					</div>
+				</main>
+			</body>
+		</body>
+	</html>
+</div></body></html></div>{% include 'partials/_footer.html.twig' %}<script src="{{ asset('js/sidebars.js') }}"></script><script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script></body></html>
