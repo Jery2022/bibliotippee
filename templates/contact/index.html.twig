@@ -1,39 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Contact
+{% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="col col-xl-5 mx-auto mt-5 mb-5 bg-light">
-        {{ form_errors(form) }}
-        {% if errorMsg is defined %}
-            <div class="alert alert-warning text-center">{{ errorMsg }}</div>
-        {% endif %}
-        {% if successMsg is defined %}
-            <div class="alert alert-success text-center">{{ successMsg }}</div>
-        {% endif %}
-        
-    </div>
-    <div class="col col-xl-5 mx-auto mt-3 mb-5 bg-light">
-        <div class="col bg-white"  >
-            <div class="row justify-content-center">
-                <img src="{{ asset('build/images/logo/Logo-cntippee100.jpg') }}" 
-                        alt="logo bibliotippee" 
-                        style="width:100px; height:100px; align:center; margin: 25px;"
-                        />
-            </div>
-        </div>
+	<div class="container">
+		<div class="col col-xl-5 mx-auto mt-5 mb-5 bg-light">
+			{{ form_errors(form) }}
+			{% for flash_error in app.flashes('error') %}
+				<div class="alert alert-danger text-center" role="alert">{{ flash_error }}</div>
+			{% endfor %}
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success text-center" role="alert">{{ message }}</div>
+			{% endfor %}
 
-        <div style="background-color: #d0d0d0;">
-            <h2 class="text-center p-3">Contactez-nous</h2>
-            <div class="col p-3">
-                {{ form_start(form) }}
-                    {{ form_row(form.subject) }}
-                    {{ form_row(form.email) }}
-                    {{ form_row(form.content) }}
-                {{ form_end(form) }}  
-            </div>
-        </div>
-    </div>
-</div>
+		</div>
+		<div class="col col-xl-5 mx-auto mt-3 mb-5 bg-light">
+			<div class="col bg-white">
+				<div class="row justify-content-center">
+					<img src="{{ asset('build/images/logo/Logo-cntippee100.jpg') }}" alt="logo bibliotippee" style="width:100px; height:100px; align:center; margin: 25px;"/>
+				</div>
+			</div>
+
+			<div style="background-color: #d0d0d0;">
+				<h2 class="text-center p-3">Contactez-nous</h2>
+				<div class="col p-3">
+					{{ form_start(form) }}
+					{{ form_row(form.subject) }}
+					{{ form_row(form.email) }}
+					{{ form_row(form.content) }}
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

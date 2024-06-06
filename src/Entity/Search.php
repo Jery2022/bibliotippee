@@ -18,7 +18,7 @@ class Search
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'searchs')]
+    #[ORM\ManyToOne(inversedBy : 'searchs')]
     private ?Document $documents = null;
 
     #[ORM\ManyToOne(inversedBy: 'search')]
@@ -44,8 +44,8 @@ class Search
 
     public function __toString(): string
     {
-        return $this->getDocuments();
-    }   
+        return $this->getId();
+    }
 
     public function getId(): ?int
     {

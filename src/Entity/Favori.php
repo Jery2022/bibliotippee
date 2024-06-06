@@ -19,10 +19,7 @@ class Favori
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-
-   
-
-    #[ORM\ManyToOne(inversedBy: 'favori')]
+    #[ORM\ManyToOne(inversedBy : 'favori')]
     private ?User $users = null;
 
     #[ORM\ManyToOne(inversedBy: 'favoris')]
@@ -57,7 +54,6 @@ class Favori
         return $this;
     }
 
-  
     public function getUsers(): ?User
     {
         return $this->users;

@@ -20,7 +20,7 @@ class ContactType extends AbstractType
             ])
             ->add('subject', ChoiceType::class, [
                 'choices' => [
-                    'Choisissez un sujet' => '',
+                    'Choisissez un objet' => '',
                     'Demande de renseignements' => 'Demande de renseignements',
                     'Signaler un bug' => 'Signaler un bug',
                     'Proposer une amélioration' => 'Proposer une amélioration',

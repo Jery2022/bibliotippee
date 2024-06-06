@@ -13,6 +13,13 @@
                     </div>
             </section>
             <section class="container py-5">
+                <div class="text-center display-6 fw-bolder px-md-5 my-4">
+                    Rechercher un document
+                     {%  include "components/_search_data.html.twig"  with  
+                     { form: form } only  %}
+                </div>
+            </section>
+            <section class="container py-5">
                 {% include 'partials/document/_document_block.html.twig' %}
             </section>
             <section class="container py-5">

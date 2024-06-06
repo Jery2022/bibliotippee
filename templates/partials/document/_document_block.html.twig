@@ -1,23 +1,8 @@
 {% block body %}
-	<div class="row align-items-center bg-warning my-4 py-4
-																											                            g-3 justify-content-between ">
-
-		{% if categories %}
-			<div class="col col-md-3">
-				<select class="form-select" aria-label="select by category">
-					<option selected>Choisir une catégorie</option>
-					{% for category in categories %}
-						<option value="{{ path('app_document_index', {'category': category.id}) }}">{{ category.intitule }}</option>
-					{% endfor %}
-				</select>
-			</div>
-		{% else %}
-			<div class="text-center bg-warning">Désolé aucune catégorie trouvée !</div>
-		{% endif %}
-	</div>
+	
+	
 	<div class="container-fluid px-lg-5 mt-5">
-		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3
-																																				                row-cols-xl-4 justify-content-center">
+		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
 			{% for doc in documents %}
 				<div class="col mb-5">

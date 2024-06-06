@@ -46,21 +46,17 @@ class ContactController extends AbstractController
             } catch (TransportExceptionInterface $e) {
                 // some error prevented the email sending; display an
                 // error message or try to resend the message
-                $errorMsg = 'Une erreur est survenue lors de l\'envoi de l\'email';
+                $this->addFlash('error', 'Une erreur est survenue lors de l\'envoi de l\'email');
                 return $this->render('contact/index.html.twig', [
                     'websiteName' => $websiteName,
                     'form' => $form->createView(),
-                    'errorMsg' => $errorMsg,
                 ]);
             }
         }
 
-        //$successMsg = 'Votre email a bien été envoyé !';
-        //return $this->redirectToRoute('app_contact');
         return $this->render('contact/index.html.twig', [
             'websiteName' => $websiteName,
             'form' => $form->createView(),
-            // 'successMsg' => $successMsg,
         ]);
     }
 }

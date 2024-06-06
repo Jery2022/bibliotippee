@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Document;
 use App\Form\CommentType;
+use App\Model\SearchData;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\DocumentRepository;
@@ -12,6 +13,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -22,17 +24,29 @@ class DocumentController extends AbstractController
 {
     #[Route('/', name: 'app_document_index', methods: ['GET'])]
     public function index(
-        //  Request $request,
+        Request $request,
         //  Document $document,
         DocumentRepository $documentRepository,
         CategoryRepository $categoryRepository,
         CommentRepository $commentRepository): Response {
 
-        /*  $document = new Document();
-        dd($document);
-        $offset = max(0, $request->query->getInt('offset', 0));
-        $paginatorDoc = $documentRepository->getDocumentPaginator($document, $offset);
-         */
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchType::class, $searchData);
+        $form->handleRequest($request);
+
+        //dd($form, $searchData);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$documents = $documentRepository->findSearch($searchData);
+            dd($form, $searchData);
+            /* } else {
+        $allDocuments = $documentRepository->findBy(
+        ['isPublished' => true],
+        ['createdAt' => 'DESC'],
+        );
+        } */
+        }
+
         $allDocuments = $documentRepository->findBy(
             ['isPublished' => true],
             ['createdAt' => 'DESC'],
@@ -42,13 +56,13 @@ class DocumentController extends AbstractController
 
         $websiteName = 'BiblioTIPPEE';
 
+        // dd($form->createView());
+
         return $this->render('document/index.html.twig', [
+            'form' => $form->createView(),
             'websiteName' => $websiteName,
             'documents' => $allDocuments,
             'categories' => $catogories,
-            // 'comments' => $paginatorDoc,
-            //'previous' => $offset - DocumentRepository::DOCUMENTS_PER_PAGE,
-            // 'next' => min(count($paginatorDoc), $offset + DocumentRepository::DOCUMENTS_PER_PAGE),
         ]);
     }
 
