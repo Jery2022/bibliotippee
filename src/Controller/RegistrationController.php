@@ -53,7 +53,7 @@ class RegistrationController extends AbstractController
             );
 
             // do anything else you need here, like send an email
-            $this->addFlash('verify_email_error', 'An email has been sent to you. Please check your inbox to verify your email address.');
+            $this->addFlash('verify_email_error', 'Un email vous a été envoyé. Merci de bien vouloir vérifier votre boite émail.');
             return $security->login($user, AppCustomAuthenticator::class, 'main');
         }
 
@@ -72,13 +72,10 @@ class RegistrationController extends AbstractController
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
-
+        $this->addFlash('success', 'Votre adresse email a bien été vérifiée.');
         return $this->redirectToRoute('app_login');
     }
 }

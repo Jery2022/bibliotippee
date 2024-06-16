@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head lang='fr'>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Bienvenue à BiblioTIPPEE
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{% block stylesheets %}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+			{% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %}
+		{% endblock %}
+	</head>
+	<body>
+		{% include 'partials/_header.html.twig' %}
+		<main class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<div class="container">
+						<div class="col col-xl-5 mx-auto mt-5 mb-5 bg-light">
+							<form method="post" class="border-warning">
+								<div class="col bg-white">
+									<div class="row justify-content-center">
+										<img src="{{ asset('build/images/logo/Logo-cntippee100.jpg') }}" alt="logo bibliotippee" style="width:100px; height:100px; align:center; margin: 25px;"/>
+									</div>
+								</div>
+								<div style="background-color: #d0d0d0;"> {% block body %}{% endblock %}
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</main>
+				{% include 'partials/_footer.html.twig' %}</body>
+		</body>
+	</html>
+</body></html>

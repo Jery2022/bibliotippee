@@ -97,6 +97,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
+    #[ORM\Column(type : 'string', length: 100, nullable: true)]
+    private ?string $reseToken = null;
+
     public function __construct()
     {
         $this->favori = new ArrayCollection();
@@ -106,7 +109,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->download = new ArrayCollection();
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getId();
     }
@@ -421,6 +424,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of reseToken
+     */
+    public function getReseToken(): ?string
+    {
+        return $this->reseToken;
+    }
+
+    /**
+     * Set the value of reseToken
+     *
+     * @return  self
+     */
+    public function setReseToken(?string $reseToken): self
+    {
+        $this->reseToken = $reseToken;
 
         return $this;
     }
