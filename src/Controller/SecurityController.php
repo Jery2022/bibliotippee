@@ -85,16 +85,16 @@ class SecurityController extends AbstractController
                 $mailer->send($message);
 
                 $this->addFlash('success', 'Un email vous a été envoyé. Merci de bien vouloir vérifier  votre messagérie !');
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('app_forgot_pwd');
             }
 
-            $this->addFlash('danger', 'Un problème est survenu, veuillez réessayer plus tard.');
+            $this->addFlash('danger', 'Oups! Un problème est survenu, veuillez réessayer plus tard.');
             return $this->redirectToRoute('app_forgot_pwd');
 
         }
 
         return $this->render('security/forgot_password.html.twig', [
-            'form' => $form->createView(),
+            'registrationForm' => $form->createView(),
         ]);
     }
 

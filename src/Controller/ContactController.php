@@ -40,7 +40,7 @@ class ContactController extends AbstractController
             try {
                 // Envoi de l'email
                 $mailer->send($email);
-                $this->addFlash('success', 'Votre email a bien été envoyé !');
+                $this->addFlash('success', 'Votre message a bien été envoyé à l\'administrateur !');
                 return $this->redirectToRoute('app_contact');
 
             } catch (TransportExceptionInterface $e) {

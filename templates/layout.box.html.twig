@@ -27,6 +27,15 @@
 				<div class="col-12">
 					<div class="container">
 						<div class="col col-xl-5 mx-auto mt-5 mb-5 bg-light">
+							{% for message in app.flashes('form') %}
+								<div class="alert " role="alert">{{ message }}</div>
+							{% endfor %}
+							{% for success in app.flashes('success') %}
+								<div class="d-flex justify-content-between p-3 my-2 alert alert-succes" role="alert">
+									{{ success }}
+								</div>
+							{% endfor %}
+
 							<form method="post" class="border-warning">
 								<div class="col bg-white">
 									<div class="row justify-content-center">
